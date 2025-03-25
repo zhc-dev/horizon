@@ -1,0 +1,6 @@
+server:
+  port: 14166
+
+spring:
+  application:
+    name: horizon-friend
