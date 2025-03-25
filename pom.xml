@@ -16,6 +16,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <packaging>pom</packaging>
     <modules>
         <module>horizon-modules</module>
+        <module>horizon-common</module>
+        <module>horizon-common/horizon-common-core</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -24,12 +26,17 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <horizon-common-core.version>1.0-SNAPSHOT</horizon-common-core.version>
     </properties>
     <dependencies>
         <!-- bootstrap 启动器 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
     <dependencyManagement>

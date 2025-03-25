@@ -1,6 +1,12 @@
 package io.github.zhc.system.test.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * 测试表
@@ -9,7 +15,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @date 2025/3/25 22:04
  */
 @TableName("tb_test")
-public class Test {
+@Getter
+@Setter
+public class Test implements Serializable {
+    @TableId
     private Long testId;
     private String title;
     private String content;
@@ -17,27 +26,6 @@ public class Test {
     public Test() {
     }
 
-    public Long getTestId() {
-        return testId;
-    }
-
-    public void setTestId(Long testId) {
-        this.testId = testId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+    @Serial
+    private static final long serialVersionUID = 1L;
 }
