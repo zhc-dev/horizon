@@ -36,3 +36,6 @@ Thumbs.db
 
 # doc
 /doc
+
+#  target
+**/target/
