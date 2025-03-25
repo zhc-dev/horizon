@@ -23,6 +23,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <spring-boot.version>3.0.1</spring-boot.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
     </properties>
     <dependencies>
         <!-- bootstrap 启动器 -->

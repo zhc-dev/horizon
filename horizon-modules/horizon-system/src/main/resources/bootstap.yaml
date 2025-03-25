@@ -1,6 +1,0 @@
-server:
-  port: 14168
-
-spring:
-  application:
-    name: horizon-system

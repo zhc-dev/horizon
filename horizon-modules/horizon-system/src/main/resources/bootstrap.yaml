@@ -1,0 +1,15 @@
+server:
+  port: 14169
+
+spring:
+  application:
+    name: horizon-system
+  datasource:
+    username: horizon
+    password: horizon
+    url: jdbc:mysql://localhost:3306/horizon_dev
+    hikari:
+      minimum-idle: 5 # 最⼩空闲连接数
+      maximum-pool-size: 20 # 最⼤连接数
+      idle-timeout: 30000 # 空闲连接存活时间（毫秒）
+      connection-timeout: 30000 # 连接超时时间（毫秒）
