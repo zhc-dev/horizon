@@ -2,7 +2,6 @@ package io.github.zhc.common.core.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
@@ -21,6 +20,10 @@ public enum ResultCode {//操作唱功
     FAILED_PARAMS_VALIDATE      (3002, "参数校验失败"),
     FAILED_NOT_EXISTS           (3003, "资源不存在"),
     FAILED_ALREADY_EXISTS       (3004, "资源已存在"),
+    FAILED_PARAMS_NULL_ERROR    (3006,"请求参数错误"),
+    FAILED_PARAMS_EMPTY_ERROR   (3007,"请求参数为空"),
+    FAILED_PARAMS_LENGTH_ERROR  (3008,"请求参数长度错误"),
+
 
     AILED_USER_EXISTS           (3101, "用户已存在"),
     FAILED_USER_NOT_EXISTS      (3102, "用户不存在"),

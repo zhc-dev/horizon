@@ -32,5 +32,12 @@
             <artifactId>horizon-common-core</artifactId>
             <version>${horizon-common-core.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.vsersion}</version>
+        </dependency>
     </dependencies>
 </project>
