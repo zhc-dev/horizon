@@ -34,12 +34,10 @@ public class SystemUserServiceImpl implements SystemUserService {
         // 查询数据库
         SystemUser systemUser = systemUserMapper.selectOne(new LambdaQueryWrapper<SystemUser>().// limit 1
                 select(SystemUser::getUserPassword). // select user_password
-                eq(SystemUser::getUserAccount, userAccount). // where user_account = ${userAccount}
-                eq(SystemUser::getUserPassword, userPassword));//  and user_password = ${userPassword}
+                eq(SystemUser::getUserAccount, userAccount)); // where user_account = ${userAccount}
 
-        if (systemUser == null) R.fail(ResultCode.FAILED_USER_NOT_EXISTS);
+        if (systemUser == null) return R.fail(ResultCode.FAILED_USER_NOT_EXISTS);
 
-        assert systemUser != null;// 这里的 systemUser 不可能为空 IDEA 静态代码分析工具会误报
         if (StringUtils.isBlank(systemUser.getUserPassword())) return R.fail(ResultCode.FAILED_LOGIN);
 
         if (!systemUser.getUserPassword().equals(userPassword)) return R.fail(ResultCode.FAILED_LOGIN);
