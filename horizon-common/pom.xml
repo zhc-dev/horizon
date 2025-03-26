@@ -10,6 +10,11 @@
     </parent>
 
     <artifactId>horizon-common</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>horizon-swagger</module>
+        <module>horizon-common-core</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
