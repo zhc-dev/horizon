@@ -4,6 +4,8 @@ CREATE DATABASE IF NOT EXISTS `horizon_dev`;
 CREATE USER `horizon`@`%` IDENTIFIED BY 'horizon';
 # 赋予用户操作 `horizon_dev` 数据库的权限
 GRANT ALTER,CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_dev.* TO `horizon`@`%`;
+# 赋予用户操作 `horizon_nacos_dev` 数据库的权限
+GRANT ALTER,CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_nacos_dev.* TO `horizon`@`%`;
 # 选中数据库
 USE horizon_dev;
 # 创建测试表

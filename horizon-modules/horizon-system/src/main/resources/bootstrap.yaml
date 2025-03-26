@@ -1,15 +1,14 @@
-server:
-  port: 14169
-
 spring:
   application:
     name: horizon-system
-  datasource:
-    username: horizon
-    password: horizon
-    url: jdbc:mysql://localhost:3306/horizon_dev
-    hikari:
-      minimum-idle: 5 # 最⼩空闲连接数
-      maximum-pool-size: 20 # 最⼤连接数
-      idle-timeout: 30000 # 空闲连接存活时间（毫秒）
-      connection-timeout: 30000 # 连接超时时间（毫秒）
+  profiles:
+    active: local
+  cloud:
+    nacos:
+      discovery:
+        namespace: 69c572c7-92b9-4c08-886e-c28fb382045b
+        server-addr: http://localhost:8848
+      config:
+        namespace: 69c572c7-92b9-4c08-886e-c28fb382045b
+        server-addr: http://localhost:8848
+        file-extension: yaml
