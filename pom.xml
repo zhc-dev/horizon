@@ -29,6 +29,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <commons-lang3.vsersion>3.12.0</commons-lang3.vsersion>
         <springdoc-openapi-starter-webmvc-ui.version>2.2.0</springdoc-openapi-starter-webmvc-ui.version>
         <horizon-swagger.version>1.0-SNAPSHOT</horizon-swagger.version>
+        <horizon-common-security.version>1.0-SNAPSHOT</horizon-common-security.version>
     </properties>
     <dependencies>
         <!-- bootstrap 启动器 -->

@@ -36,7 +36,6 @@ public class SystemUserServiceImpl implements SystemUserService {
         SystemUser systemUser = systemUserMapper.selectOne(new LambdaQueryWrapper<SystemUser>().// limit 1
                 select(SystemUser::getUserPassword). // select user_password
                 eq(SystemUser::getUserAccount, userAccount)); // where user_account = ${userAccount}
-
         if (systemUser == null) return R.fail(ResultCode.FAILED_USER_NOT_EXISTS);
 
         if (StringUtils.isBlank(systemUser.getUserPassword())) return R.fail(ResultCode.FAILED_LOGIN);
