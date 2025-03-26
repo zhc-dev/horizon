@@ -17,4 +17,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-swagger</artifactId>
+            <version>${horizon-swagger.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

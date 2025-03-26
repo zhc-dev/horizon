@@ -1,6 +1,7 @@
 package io.github.zhc.common.core.model.entity;
 
 import io.github.zhc.common.core.model.enums.ResultCode;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,17 +12,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class R<T> {
-    /**
-     * 响应状态码
-     */
+    @Schema(description = "响应状态码")
     private int code;
-    /**
-     * 响应描述
-     */
+
+    @Schema(description = "响应消息")
     private String msg;
-    /**
-     * 响应数据
-     */
+
+    @Schema(description = "响应数据")
     private T data;
 
     public static <T> R<T> ok() {

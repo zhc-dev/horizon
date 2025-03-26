@@ -29,6 +29,12 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-swagger</artifactId>
+            <version>${horizon-swagger.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
