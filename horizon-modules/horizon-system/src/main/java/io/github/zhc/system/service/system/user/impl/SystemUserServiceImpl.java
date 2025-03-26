@@ -7,6 +7,7 @@ import io.github.zhc.system.mapper.SystemUserMapper;
 import io.github.zhc.system.model.entity.SystemUser;
 import io.github.zhc.system.model.vo.SystemUserLoginVO;
 import io.github.zhc.system.service.system.user.SystemUserService;
+import io.github.zhc.system.utils.BCryptUtils;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -40,7 +41,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
         if (StringUtils.isBlank(systemUser.getUserPassword())) return R.fail(ResultCode.FAILED_LOGIN);
 
-        if (!systemUser.getUserPassword().equals(userPassword)) return R.fail(ResultCode.FAILED_LOGIN);
+        if (!BCryptUtils.matches(userPassword, systemUser.getUserPassword())) return R.fail(ResultCode.FAILED_LOGIN);
 
         // 登录成功!返回脱敏系统用户
         SystemUserLoginVO systemUserLoginVO = new SystemUserLoginVO();
