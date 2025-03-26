@@ -27,6 +27,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <horizon-common-core.version>1.0-SNAPSHOT</horizon-common-core.version>
         <commons-lang3.vsersion>3.12.0</commons-lang3.vsersion>
+        <springdoc-openapi-starter-webmvc-ui.version>2.2.0</springdoc-openapi-starter-webmvc-ui.version>
     </properties>
     <dependencies>
         <!-- bootstrap 启动器 -->
