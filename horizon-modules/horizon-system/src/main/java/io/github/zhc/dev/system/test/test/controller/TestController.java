@@ -1,5 +1,7 @@
 package io.github.zhc.dev.system.test.test.controller;
 
+import io.github.zhc.dev.redis.service.RedisService;
+import io.github.zhc.dev.system.model.entity.SystemUser;
 import io.github.zhc.dev.system.test.test.service.TestService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +22,23 @@ public class TestController {
     @Resource
     private TestService testService;
 
+    @Resource
+    private RedisService redisService;
+
     // http://localhost:14168/test/list
     @GetMapping("/list")
     public List<?> list() {
         return testService.list();
+    }
+
+
+    @GetMapping("/redisAddAndGet")
+    public String redisAddAndGet() {
+        SystemUser user = new SystemUser();
+        user.setUserAccount("admin");
+        user.setUserPassword("admin@horizon");
+        redisService.setCacheObject("user", user);
+        return redisService.getCacheObject("user",SystemUser.class).toString();
+
     }
 }

@@ -35,6 +35,12 @@
             <artifactId>horizon-swagger</artifactId>
             <version>${horizon-swagger.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-redis</artifactId>
+            <version>${horizon-common-redis.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
