@@ -1,0 +1,69 @@
+package io.github.zhc.dev.common.core.utils;
+
+import io.github.zhc.dev.common.core.constants.JwtConstant;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
+import java.security.Key;
+import java.util.Map;
+import java.util.HashMap;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * Jwt 工具类
+ *
+ * @author zhc.dev
+ * @date 2025/3/27 21：51
+ */
+public class JwtUtils {
+    /**
+     * 生成令牌
+     *
+     * @param claims 数据
+     * @param secret 密钥
+     * @return 令牌
+     */
+    public static String createToken(Map<String, Object> claims, String secret) {
+        Key key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        return Jwts.builder()
+                .setClaims(claims)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    /**
+     * 从令牌中获取数据
+     *
+     * @param token  令牌
+     * @param secret 密钥
+     * @return 数据
+     */
+    public static Claims parseToken(String token, String secret) {
+        Key key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+
+    /**
+     * 获取user_id
+     *
+     * @param claims 数据
+     * @return 用户Id
+     */
+    public static String getUserId(Claims claims) {
+        return String.valueOf(claims.getOrDefault(JwtConstant.USER_ID, ""));
+
+    }
+
+    public static void main(String[] args) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("user", "zhc.dev");
+        System.out.println(createToken(claims, "W2hvcml6b25daW8uZ2l0aHViLnpoYy5kZXYuaG9yaXpvbi5zZWN1cml0eS5qd3Quc2VjcmV0LmJhc2U2NC5vcmlnbmFs"));
+    }
+}

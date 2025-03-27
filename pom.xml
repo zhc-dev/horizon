@@ -33,6 +33,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <horizon-common-security.version>1.0-SNAPSHOT</horizon-common-security.version>
         <fastjson2.version>2.0.43</fastjson2.version>
         <horizon-common-redis.version>1.0-SNAPSHOT</horizon-common-redis.version>
+        <jjwt-api.version>0.11.5</jjwt-api.version>
+        <jjwt-impl.version>0.11.5</jjwt-impl.version>
+        <jjwt-jackson.version>0.11.5</jjwt-jackson.version>
+        <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
+        <hutool-all.version>5.8.22</hutool-all.version>
     </properties>
     <dependencies>
         <!-- bootstrap 启动器 -->

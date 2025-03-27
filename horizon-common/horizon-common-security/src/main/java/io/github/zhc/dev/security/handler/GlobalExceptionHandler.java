@@ -1,8 +1,8 @@
-package io.github.zhc.dev.security;
+package io.github.zhc.dev.security.handler;
 
 
-import io.github.zhc.dev.common.core.entity.R;
-import io.github.zhc.dev.common.core.enums.ResultCode;
+import io.github.zhc.dev.common.core.model.entity.R;
+import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

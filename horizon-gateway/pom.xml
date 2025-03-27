@@ -37,5 +37,23 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-core</artifactId>
+            <version>${horizon-common-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-core</artifactId>
+            <version>${horizon-common-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-redis</artifactId>
+            <version>${horizon-common-redis.version}</version>
+        </dependency>
     </dependencies>
 </project>

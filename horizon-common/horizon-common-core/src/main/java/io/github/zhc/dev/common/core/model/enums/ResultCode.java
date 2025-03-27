@@ -1,4 +1,4 @@
-package io.github.zhc.dev.common.core.enums;
+package io.github.zhc.dev.common.core.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

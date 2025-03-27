@@ -1,4 +1,4 @@
-package io.github.zhc.dev.common.core.entity;
+package io.github.zhc.dev.common.core.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

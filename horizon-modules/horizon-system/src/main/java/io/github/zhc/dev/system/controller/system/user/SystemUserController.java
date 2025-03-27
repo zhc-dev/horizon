@@ -1,11 +1,11 @@
 package io.github.zhc.dev.system.controller.system.user;
 
-import io.github.zhc.dev.common.core.entity.R;
-import io.github.zhc.dev.common.core.enums.ResultCode;
+import io.github.zhc.dev.common.core.model.entity.R;
+import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.system.model.dto.SystemUserLoginRequest;
 import io.github.zhc.dev.system.model.dto.SystemUserRegisterRequest;
 import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
-import io.github.zhc.dev.system.service.system.user.impl.user.SystemUserService;
+import io.github.zhc.dev.system.service.system.user.impl.system.user.SystemUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.annotation.Resource;

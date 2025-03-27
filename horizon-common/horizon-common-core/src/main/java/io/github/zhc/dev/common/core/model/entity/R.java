@@ -1,6 +1,6 @@
-package io.github.zhc.dev.common.core.entity;
+package io.github.zhc.dev.common.core.model.entity;
 
-import io.github.zhc.dev.common.core.enums.ResultCode;
+import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

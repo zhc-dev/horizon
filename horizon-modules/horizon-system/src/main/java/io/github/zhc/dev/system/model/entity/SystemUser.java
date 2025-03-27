@@ -3,7 +3,7 @@ package io.github.zhc.dev.system.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.github.zhc.dev.common.core.entity.BaseEntity;
+import io.github.zhc.dev.common.core.model.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

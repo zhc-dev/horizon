@@ -1,6 +1,6 @@
-package io.github.zhc.dev.system.service.system.user.impl.user;
+package io.github.zhc.dev.system.service.system.user.impl.system.user;
 
-import io.github.zhc.dev.common.core.entity.R;
+import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
 
 /**
