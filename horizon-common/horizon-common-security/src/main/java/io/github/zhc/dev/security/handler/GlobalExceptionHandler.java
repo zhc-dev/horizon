@@ -3,6 +3,7 @@ package io.github.zhc.dev.security.handler;
 
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
+import io.github.zhc.dev.security.exception.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -27,6 +28,15 @@ public class GlobalExceptionHandler {
         log.error("请求地址'{}',不⽀持'{}'请求", request.getRequestURI(), e.getMethod());
         return R.fail(ResultCode.ERROR);
     }
+
+    @ExceptionHandler(ServiceException.class)
+    public R<?> handleServiceException(ServiceException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        ResultCode resultCode = e.getResultCode();
+        log.error("请求地址'{}',发生业务异常: {}", requestURI, resultCode.getMsg(), e);
+        return R.fail(resultCode);
+    }
+
 
     /**
      * 拦截运⾏时异常

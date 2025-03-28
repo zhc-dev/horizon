@@ -1,5 +1,7 @@
 package io.github.zhc.dev.common.core.model.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +18,16 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class BaseEntity implements Serializable {
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
+
+    @TableField(fill = FieldFill.UPDATE)
     private Long updateBy;
+
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @Serial

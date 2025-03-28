@@ -20,6 +20,12 @@
     <dependencies>
         <dependency>
             <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-mybatis</artifactId>
+            <version>${horizon-common-mybatis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
             <artifactId>horizon-swagger</artifactId>
             <version>${horizon-swagger.version}</version>
         </dependency>

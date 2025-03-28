@@ -1,9 +1,11 @@
 package io.github.zhc.dev.system.service.system.user.impl.system.user.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserRole;
+import io.github.zhc.dev.security.exception.ServiceException;
 import io.github.zhc.dev.security.service.TokenService;
 import io.github.zhc.dev.system.mapper.SystemUserMapper;
 import io.github.zhc.dev.system.model.entity.SystemUser;
@@ -16,6 +18,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author zhc.dev
@@ -62,5 +67,17 @@ public class SystemUserServiceImpl implements SystemUserService {
         systemUserLoginVO.setToken(tokenService.createToken(systemUser.getUserId(), secret, UserRole.ADMIN.getValue()));
 
         return R.ok(systemUserLoginVO);
+    }
+
+    @Override
+    public int add(String userAccount, String userPassword) {
+        List<SystemUser> users = systemUserMapper.selectList(new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUserAccount, userAccount));
+        if (CollectionUtil.isNotEmpty(users)) throw new ServiceException(ResultCode.AILED_USER_EXISTS);
+
+        SystemUser systemUser = new SystemUser();
+        systemUser.setUserAccount(userAccount);
+        systemUser.setUserPassword(BCryptUtils.encrypt(userPassword));
+
+        return systemUserMapper.insert(systemUser);
     }
 }

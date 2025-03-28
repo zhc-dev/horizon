@@ -1,5 +1,6 @@
 package io.github.zhc.dev.system.controller.system.user;
 
+import io.github.zhc.dev.common.core.controller.BaseController;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.system.model.dto.SystemUserLoginRequest;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/system/user")
-public class SystemUserController {
+public class SystemUserController extends BaseController {
 
     @Resource
     private SystemUserService systemUserService;
@@ -59,13 +60,16 @@ public class SystemUserController {
     }
 
     /**
-     * 注册接口
+     * 预置数据接口
      *
-     * @param userRegisterRequest 系统用户注册DTO
-     * @return 注册系统用户
+     * @param userRegisterRequest 系统用户
      */
-    @PostMapping("/register")
-    public R<Void> register(@RequestBody SystemUserRegisterRequest userRegisterRequest) {
+    @PostMapping("/add")
+    @Operation(summary = "新增管理员", description = "根据提供的信息新增管理员")
+    @ApiResponse(responseCode = "1000", description = "操作成功")
+    @ApiResponse(responseCode = "2000", description = "服务繁忙请稍后重试")
+    @ApiResponse(responseCode = "3101", description = "用户已存在")
+    public R<Void> add(@RequestBody SystemUserRegisterRequest userRegisterRequest) {
         if (userRegisterRequest == null) return R.fail(ResultCode.FAILED_PARAMS_NULL_ERROR);
 
         String userAccount = userRegisterRequest.getUserAccount();
@@ -80,8 +84,10 @@ public class SystemUserController {
 
         if (!userPassword.equals(checkPassword)) return R.fail(ResultCode.FAILED_CHECK_PASSWORD_ERROR);
 
-        return null;
+        return toR(systemUserService.add(userAccount, userPassword));
     }
+
+
 }
 
 

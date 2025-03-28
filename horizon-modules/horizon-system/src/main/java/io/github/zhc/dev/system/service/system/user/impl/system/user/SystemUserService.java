@@ -8,5 +8,21 @@ import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
  * @date 2025/3/26 16:07
  */
 public interface SystemUserService {
+    /**
+     * 用户登录
+     *
+     * @param userAccount  账号
+     * @param userPassword 密码
+     * @return 用户vo
+     */
     R<SystemUserLoginVO> login(String userAccount, String userPassword);
+
+    /**
+     * 新增系统用户
+     *
+     * @param userAccount  账号
+     * @param userPassword 密码
+     * @return 数据库受影响的行数
+     */
+    int add(String userAccount, String userPassword);
 }
