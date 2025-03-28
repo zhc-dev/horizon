@@ -4,13 +4,15 @@ import io.github.zhc.dev.common.core.controller.BaseController;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.system.model.dto.SystemUserLoginRequest;
-import io.github.zhc.dev.system.model.dto.SystemUserRegisterRequest;
+import io.github.zhc.dev.system.model.dto.SystemUserAddRequest;
 import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
 import io.github.zhc.dev.system.service.system.user.impl.system.user.SystemUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,16 +47,10 @@ public class SystemUserController extends BaseController {
     @ApiResponse(responseCode = "3008", description = "请求参数长度错误")
     @ApiResponse(responseCode = "3102", description = "用户不存在")
     @ApiResponse(responseCode = "3103", description = "用户名或密码错误")
-    public R<SystemUserLoginVO> login(@RequestBody SystemUserLoginRequest userLoginRequest) {
-        if (userLoginRequest == null) return R.fail(ResultCode.FAILED_PARAMS_NULL_ERROR);
+    public R<SystemUserLoginVO> login(@Validated @RequestBody @NotNull SystemUserLoginRequest userLoginRequest) {
 
         String userAccount = userLoginRequest.getUserAccount();
         String userPassword = userLoginRequest.getUserPassword();
-
-        if (StringUtils.isAnyBlank(userAccount, userPassword)) return R.fail(ResultCode.FAILED_PARAMS_EMPTY_ERROR);
-        // 账号密码长度校验 符合要求的区间：账号 [4,30] 密码 [8,64]
-        if (userAccount.length() < 4 || userAccount.length() > 30 || userPassword.length() < 8 || userPassword.length() > 64)
-            return R.fail(ResultCode.FAILED_PARAMS_LENGTH_ERROR);
 
         return systemUserService.login(userAccount, userPassword);
     }
@@ -62,27 +58,19 @@ public class SystemUserController extends BaseController {
     /**
      * 预置数据接口
      *
-     * @param userRegisterRequest 系统用户
+     * @param systemUserAddRequest 系统用户
      */
     @PostMapping("/add")
     @Operation(summary = "新增管理员", description = "根据提供的信息新增管理员")
     @ApiResponse(responseCode = "1000", description = "操作成功")
     @ApiResponse(responseCode = "2000", description = "服务繁忙请稍后重试")
     @ApiResponse(responseCode = "3101", description = "用户已存在")
-    public R<Void> add(@RequestBody SystemUserRegisterRequest userRegisterRequest) {
-        if (userRegisterRequest == null) return R.fail(ResultCode.FAILED_PARAMS_NULL_ERROR);
+    public R<Void> add(@Validated @RequestBody @NotNull SystemUserAddRequest systemUserAddRequest) {
+        String userAccount = systemUserAddRequest.getUserAccount();
+        String userPassword = systemUserAddRequest.getUserPassword();
+        String checkPassword = systemUserAddRequest.getCheckPassword();
 
-        String userAccount = userRegisterRequest.getUserAccount();
-        String userPassword = userRegisterRequest.getUserPassword();
-        String checkPassword = userRegisterRequest.getCheckPassword();
-
-        if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword))
-            return R.fail(ResultCode.FAILED_PARAMS_EMPTY_ERROR);
-
-        if (userAccount.length() < 4 || userAccount.length() > 30 || userPassword.length() < 8 || userPassword.length() > 64)
-            return R.fail(ResultCode.FAILED_PARAMS_LENGTH_ERROR);
-
-        if (!userPassword.equals(checkPassword)) return R.fail(ResultCode.FAILED_CHECK_PASSWORD_ERROR);
+        if (!userPassword.equals(checkPassword)) return R.fail(ResultCode.FAILED_PARAMS_VALIDATE);
 
         return toR(systemUserService.add(userAccount, userPassword));
     }
