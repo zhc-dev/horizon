@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.test.test.service;
+package io.github.zhc.dev.system.test.service;
 
 import java.util.List;
 

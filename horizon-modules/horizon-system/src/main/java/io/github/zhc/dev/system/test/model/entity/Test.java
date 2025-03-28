@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.test.test.model.entity;
+package io.github.zhc.dev.system.test.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

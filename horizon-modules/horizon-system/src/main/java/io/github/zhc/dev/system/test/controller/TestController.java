@@ -1,8 +1,8 @@
-package io.github.zhc.dev.system.test.test.controller;
+package io.github.zhc.dev.system.test.controller;
 
 import io.github.zhc.dev.redis.service.RedisService;
 import io.github.zhc.dev.system.model.entity.SystemUser;
-import io.github.zhc.dev.system.test.test.service.TestService;
+import io.github.zhc.dev.system.test.service.TestService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
 import java.security.Key;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
  * @author zhc.dev
  * @date 2025/3/27 21：51
  */
+@Slf4j
 public class JwtUtils {
     /**
      * 生成令牌
@@ -59,6 +61,28 @@ public class JwtUtils {
     public static String getUserId(Claims claims) {
         return String.valueOf(claims.getOrDefault(JwtConstant.USER_ID, ""));
 
+    }
+
+    /**
+     * 解析token，获取claims对象
+     *
+     * @param token  jwt令牌
+     * @param secret jwt秘钥
+     * @return claims
+     */
+    public static Claims getClaims(String token, String secret) {
+        Claims claims;
+        try {
+            claims = JwtUtils.parseToken(token, secret);
+            if (claims == null) {
+                log.error("解析token：{}, 出现异常", token);
+                return null;
+            }
+        } catch (Exception e) {
+            log.error("解析token：{}, 出现异常", token, e);
+            return null;
+        }
+        return claims;
     }
 
     public static void main(String[] args) {

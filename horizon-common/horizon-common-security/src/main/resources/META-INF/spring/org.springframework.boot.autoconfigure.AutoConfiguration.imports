@@ -1,2 +1,4 @@
 io.github.zhc.dev.security.handler.GlobalExceptionHandler
 io.github.zhc.dev.security.service.TokenService
+io.github.zhc.dev.security.config.WebMvcConfig
+io.github.zhc.dev.security.intercepter.TokenInterceptor

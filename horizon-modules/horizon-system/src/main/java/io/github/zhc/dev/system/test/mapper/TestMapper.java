@@ -1,7 +1,7 @@
-package io.github.zhc.dev.system.test.test.mapper;
+package io.github.zhc.dev.system.test.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.github.zhc.dev.system.test.test.model.entity.Test;
+import io.github.zhc.dev.system.test.model.entity.Test;
 
 /**
  * @author zhc.dev

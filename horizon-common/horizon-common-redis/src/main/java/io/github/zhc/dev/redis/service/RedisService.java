@@ -36,6 +36,18 @@ public class RedisService {
         return redisTemplate.hasKey(key);
     }
 
+
+    /**
+     * 获取剩余有效时间
+     *
+     * @param key  Redis键
+     * @param unit 时间单位
+     * @return 剩余有效时间
+     */
+    public Long getExpire(final String key, final TimeUnit unit) {
+        return redisTemplate.getExpire(key, unit);
+    }
+
     /**
      * 设置有效时间
      *

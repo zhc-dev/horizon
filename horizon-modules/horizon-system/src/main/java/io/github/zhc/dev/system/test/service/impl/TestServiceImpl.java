@@ -1,8 +1,8 @@
-package io.github.zhc.dev.system.test.test.service.impl;
+package io.github.zhc.dev.system.test.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import io.github.zhc.dev.system.test.test.mapper.TestMapper;
-import io.github.zhc.dev.system.test.test.service.TestService;
+import io.github.zhc.dev.system.test.mapper.TestMapper;
+import io.github.zhc.dev.system.test.service.TestService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
