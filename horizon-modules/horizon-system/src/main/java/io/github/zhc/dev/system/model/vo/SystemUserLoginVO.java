@@ -11,8 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SystemUserLoginVO {
-    @Schema(description = "用户昵称")
-    private String nickName;
     @Schema(description = "鉴权令牌")
     private String token;
 }

@@ -1,6 +1,7 @@
 package io.github.zhc.dev.system.service.system.user.impl.system.user;
 
 import io.github.zhc.dev.common.core.model.entity.R;
+import io.github.zhc.dev.system.model.vo.CurrentLoginUserVO;
 import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
 
 /**
@@ -25,4 +26,12 @@ public interface SystemUserService {
      * @return 数据库受影响的行数
      */
     int add(String userAccount, String userPassword);
+
+    /**
+     * 获取当前登录用户信息
+     *
+     * @param token 令牌
+     * @return 当前登录用户信息
+     */
+    R<CurrentLoginUserVO> currentLoginUser(String token);
 }

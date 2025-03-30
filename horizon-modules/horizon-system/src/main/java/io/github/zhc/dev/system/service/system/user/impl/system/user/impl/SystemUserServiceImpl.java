@@ -1,7 +1,10 @@
 package io.github.zhc.dev.system.service.system.user.impl.system.user.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.github.zhc.dev.common.core.constants.HttpConstants;
+import io.github.zhc.dev.common.core.model.entity.LoginUser;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserRole;
@@ -9,6 +12,7 @@ import io.github.zhc.dev.security.exception.ServiceException;
 import io.github.zhc.dev.security.service.TokenService;
 import io.github.zhc.dev.system.mapper.SystemUserMapper;
 import io.github.zhc.dev.system.model.entity.SystemUser;
+import io.github.zhc.dev.system.model.vo.CurrentLoginUserVO;
 import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
 import io.github.zhc.dev.system.service.system.user.impl.system.user.SystemUserService;
 import io.github.zhc.dev.system.utils.utils.BCryptUtils;
@@ -51,7 +55,7 @@ public class SystemUserServiceImpl implements SystemUserService {
     public R<SystemUserLoginVO> login(String userAccount, String userPassword) {
         // 查询数据库
         SystemUser systemUser = systemUserMapper.selectOne(new LambdaQueryWrapper<SystemUser>().// limit 1
-                select(SystemUser::getUserId, SystemUser::getUserPassword). // select user_id,user_password
+                select(SystemUser::getUserId, SystemUser::getUserPassword, SystemUser::getNickName). // select user_id,user_password
                 eq(SystemUser::getUserAccount, userAccount)); // where user_account = ${userAccount}
 
         if (systemUser == null) return R.fail(ResultCode.FAILED_USER_NOT_EXISTS);
@@ -64,11 +68,18 @@ public class SystemUserServiceImpl implements SystemUserService {
         SystemUserLoginVO systemUserLoginVO = new SystemUserLoginVO();
         BeanUtils.copyProperties(systemUser, systemUserLoginVO);
         // 将令牌返回到前端
-        systemUserLoginVO.setToken(tokenService.createToken(systemUser.getUserId(), secret, UserRole.ADMIN.getValue()));
+        systemUserLoginVO.setToken(tokenService.createToken(systemUser.getUserId(), secret, UserRole.ADMIN.getValue(), systemUser.getNickName()));
 
         return R.ok(systemUserLoginVO);
     }
 
+    /**
+     * 管理后台 预置数据
+     *
+     * @param userAccount  账号
+     * @param userPassword 密码
+     * @return 插入成功返回1，否则返回0
+     */
     @Override
     public int add(String userAccount, String userPassword) {
         List<SystemUser> users = systemUserMapper.selectList(new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUserAccount, userAccount));
@@ -79,5 +90,22 @@ public class SystemUserServiceImpl implements SystemUserService {
         systemUser.setUserPassword(BCryptUtils.encrypt(userPassword));
 
         return systemUserMapper.insert(systemUser);
+    }
+
+    @Override
+    public R<CurrentLoginUserVO> currentLoginUser(String token) {
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+        // 查询redis，获取当前登录用户
+        LoginUser loginUser = tokenService.getLoginUser(token, secret);
+        if (loginUser == null) return R.fail();
+
+        // 封装返回对象
+        CurrentLoginUserVO currentLoginUserVO = new CurrentLoginUserVO();
+        currentLoginUserVO.setNickName(loginUser.getNickName());
+        currentLoginUserVO.setRole(loginUser.getRole());
+
+        return R.ok(currentLoginUserVO);
     }
 }

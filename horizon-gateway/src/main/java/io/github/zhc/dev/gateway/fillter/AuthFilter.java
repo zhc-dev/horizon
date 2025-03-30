@@ -33,7 +33,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 /**
- * spring cloud gateway 鉴权
+ * Spring Cloud Gateway 鉴权
  * Spring Cloud Gateway 是基于 Spring WebFlux（响应式框架）构建的
  * Spring MVC（基于 Servlet 的阻塞式框架）与 WebFlux 存在冲突。
  * 需要在网关组件内，排除Spring MVC 的依赖

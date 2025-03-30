@@ -5,18 +5,15 @@ import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.system.model.dto.SystemUserLoginRequest;
 import io.github.zhc.dev.system.model.dto.SystemUserAddRequest;
+import io.github.zhc.dev.system.model.vo.CurrentLoginUserVO;
 import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
 import io.github.zhc.dev.system.service.system.user.impl.system.user.SystemUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * B端用户相关接口
@@ -73,6 +70,17 @@ public class SystemUserController extends BaseController {
         if (!userPassword.equals(checkPassword)) return R.fail(ResultCode.FAILED_PARAMS_VALIDATE);
 
         return toR(systemUserService.add(userAccount, userPassword));
+    }
+
+    /**
+     * 获取当前登录用户信息
+     *
+     * @param token 令牌
+     * @return 当前登录用户信息
+     */
+    @GetMapping("/current")
+    public R<CurrentLoginUserVO> currentLoginUser(@Validated @NotNull @RequestHeader("Authorization") String token) {
+        return systemUserService.currentLoginUser(token);
     }
 
 

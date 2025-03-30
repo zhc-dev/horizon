@@ -27,7 +27,7 @@ public class TokenService {
     @Resource
     private RedisService redisService;
 
-    public String createToken(Long userId, String secret, Integer userRole) {
+    public String createToken(Long userId, String secret, Integer userRole, String nickName) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtConstant.USER_ID, userId);
         // 生成token
@@ -37,6 +37,7 @@ public class TokenService {
         // redis value
         LoginUser loginUser = new LoginUser();
         loginUser.setRole(userRole);
+        loginUser.setNickName(nickName);
         // put cache
         redisService.setCacheObject(key, loginUser, CacheConstants.JWT_TOKEN_DEFAULT_EXPIRATION_MINUTES, TimeUnit.MINUTES);
         return token;
@@ -69,6 +70,12 @@ public class TokenService {
     public String getUserId(Claims claims) {
         if (claims == null) return null;
         return JwtUtils.getUserId(claims);
+    }
+
+    public LoginUser getLoginUser(String token, String secret) {
+        String userId = getUserId(JwtUtils.getClaims(token, secret));
+        if (userId == null) return null;
+        return redisService.getCacheObject(getJwtPayloadRedisKey(userId), LoginUser.class);
     }
 
     /**
