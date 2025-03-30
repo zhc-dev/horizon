@@ -14,7 +14,7 @@
         FROM
         tb_question tq
         left join
-        tb_sys_user ts
+        tb_system_user ts
         on
         tq.create_by = ts.user_id
         <where>
