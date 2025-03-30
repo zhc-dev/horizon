@@ -11,7 +11,7 @@ import io.github.zhc.dev.common.core.model.enums.UserRole;
 import io.github.zhc.dev.security.exception.ServiceException;
 import io.github.zhc.dev.security.service.TokenService;
 import io.github.zhc.dev.system.mapper.SystemUserMapper;
-import io.github.zhc.dev.system.model.entity.SystemUser;
+import io.github.zhc.dev.system.model.entity.system.user.SystemUser;
 import io.github.zhc.dev.system.model.vo.CurrentLoginUserVO;
 import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
 import io.github.zhc.dev.system.service.system.user.impl.system.user.SystemUserService;

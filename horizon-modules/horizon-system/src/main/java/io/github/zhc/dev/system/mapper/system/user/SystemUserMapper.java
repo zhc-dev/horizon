@@ -1,7 +1,7 @@
 package io.github.zhc.dev.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.github.zhc.dev.system.model.entity.SystemUser;
+import io.github.zhc.dev.system.model.entity.system.user.SystemUser;
 
 /**
  * @author zhc.dev
