@@ -79,11 +79,14 @@ public class SystemUserController extends BaseController {
      * @return 当前登录用户信息
      */
     @GetMapping("/current")
-    public R<CurrentLoginUserVO> currentLoginUser(@Validated @NotNull @RequestHeader("Authorization") String token) {
+    public R<CurrentLoginUserVO> currentLoginUser(@Validated @NotNull(message = "token不能为空") @RequestHeader("Authorization") String token) {
         return systemUserService.currentLoginUser(token);
     }
 
-
+    @DeleteMapping("/logout")
+    public R<Void> logout(@Validated @NotNull(message = "token不能为空") @RequestHeader("Authorization") String token) {
+        return toR(systemUserService.logout(token));
+    }
 }
 
 

@@ -72,10 +72,29 @@ public class TokenService {
         return JwtUtils.getUserId(claims);
     }
 
+    /**
+     * 获取jwt payload 中的登录用户
+     *
+     * @param token  token
+     * @param secret secret
+     * @return 用户id
+     */
     public LoginUser getLoginUser(String token, String secret) {
         String userId = getUserId(JwtUtils.getClaims(token, secret));
         if (userId == null) return null;
         return redisService.getCacheObject(getJwtPayloadRedisKey(userId), LoginUser.class);
+    }
+
+    /**
+     * 删除登录用户
+     *
+     * @param token  token
+     * @param secret secret
+     */
+    public boolean deleteLoginUser(String token, String secret) {
+        String userId = getUserId(JwtUtils.getClaims(token, secret));
+        if (userId == null) return false;
+        return redisService.deleteObject(getJwtPayloadRedisKey(userId));
     }
 
     /**

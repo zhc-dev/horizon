@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -74,6 +73,44 @@ public class SystemUserServiceImpl implements SystemUserService {
     }
 
     /**
+     * 管理后台 退出登录
+     *
+     * @param token 令牌
+     * @return 退出登录状态
+     */
+    @Override
+    public boolean logout(String token) {
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+        return tokenService.deleteLoginUser(token, secret);
+    }
+
+    /**
+     * 管理后台 获取当前登录用户
+     *
+     * @param token 令牌
+     * @return 当前登录用户视图
+     */
+    @Override
+    public R<CurrentLoginUserVO> currentLoginUser(String token) {
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+        // 查询redis，获取当前登录用户
+        LoginUser loginUser = tokenService.getLoginUser(token, secret);
+        if (loginUser == null) return R.fail();
+
+        // 封装返回对象
+        CurrentLoginUserVO currentLoginUserVO = new CurrentLoginUserVO();
+        currentLoginUserVO.setNickName(loginUser.getNickName());
+        currentLoginUserVO.setRole(loginUser.getRole());
+
+        return R.ok(currentLoginUserVO);
+    }
+
+
+    /**
      * 管理后台 预置数据
      *
      * @param userAccount  账号
@@ -90,22 +127,5 @@ public class SystemUserServiceImpl implements SystemUserService {
         systemUser.setUserPassword(BCryptUtils.encrypt(userPassword));
 
         return systemUserMapper.insert(systemUser);
-    }
-
-    @Override
-    public R<CurrentLoginUserVO> currentLoginUser(String token) {
-        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
-            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
-        }
-        // 查询redis，获取当前登录用户
-        LoginUser loginUser = tokenService.getLoginUser(token, secret);
-        if (loginUser == null) return R.fail();
-
-        // 封装返回对象
-        CurrentLoginUserVO currentLoginUserVO = new CurrentLoginUserVO();
-        currentLoginUserVO.setNickName(loginUser.getNickName());
-        currentLoginUserVO.setRole(loginUser.getRole());
-
-        return R.ok(currentLoginUserVO);
     }
 }

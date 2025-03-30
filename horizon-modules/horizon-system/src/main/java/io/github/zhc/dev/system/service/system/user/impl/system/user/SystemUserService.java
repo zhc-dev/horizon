@@ -19,13 +19,12 @@ public interface SystemUserService {
     R<SystemUserLoginVO> login(String userAccount, String userPassword);
 
     /**
-     * 新增系统用户
+     * 用户登出
      *
-     * @param userAccount  账号
-     * @param userPassword 密码
-     * @return 数据库受影响的行数
+     * @param token 令牌
+     * @return 登出结果
      */
-    int add(String userAccount, String userPassword);
+    boolean logout(String token);
 
     /**
      * 获取当前登录用户信息
@@ -34,4 +33,13 @@ public interface SystemUserService {
      * @return 当前登录用户信息
      */
     R<CurrentLoginUserVO> currentLoginUser(String token);
+
+    /**
+     * 新增系统用户
+     *
+     * @param userAccount  账号
+     * @param userPassword 密码
+     * @return 数据库受影响的行数
+     */
+    int add(String userAccount, String userPassword);
 }
