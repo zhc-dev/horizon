@@ -3,13 +3,14 @@ package io.github.zhc.dev.system.controller.system.user;
 import io.github.zhc.dev.common.core.controller.BaseController;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
-import io.github.zhc.dev.system.model.dto.SystemUserLoginRequest;
-import io.github.zhc.dev.system.model.dto.SystemUserAddRequest;
-import io.github.zhc.dev.system.model.vo.CurrentLoginUserVO;
-import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
-import io.github.zhc.dev.system.service.system.user.impl.system.user.SystemUserService;
+import io.github.zhc.dev.system.model.dto.system.user.SystemUserLoginRequest;
+import io.github.zhc.dev.system.model.dto.system.user.SystemUserAddRequest;
+import io.github.zhc.dev.system.model.vo.system.user.CurrentLoginUserVO;
+import io.github.zhc.dev.system.model.vo.system.user.SystemUserLoginVO;
+import io.github.zhc.dev.system.service.system.user.SystemUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2025/3/26 16:03
  */
 @RestController
+@Tag(name = "系统用户接口")
 @RequestMapping("/system/user")
 public class SystemUserController extends BaseController {
 

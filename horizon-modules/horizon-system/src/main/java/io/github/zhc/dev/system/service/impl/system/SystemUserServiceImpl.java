@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.service.system.user.impl.system.user.impl;
+package io.github.zhc.dev.system.service.impl.system;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
@@ -10,11 +10,11 @@ import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserRole;
 import io.github.zhc.dev.security.exception.ServiceException;
 import io.github.zhc.dev.security.service.TokenService;
-import io.github.zhc.dev.system.mapper.SystemUserMapper;
+import io.github.zhc.dev.system.mapper.system.user.SystemUserMapper;
 import io.github.zhc.dev.system.model.entity.system.user.SystemUser;
-import io.github.zhc.dev.system.model.vo.CurrentLoginUserVO;
-import io.github.zhc.dev.system.model.vo.SystemUserLoginVO;
-import io.github.zhc.dev.system.service.system.user.impl.system.user.SystemUserService;
+import io.github.zhc.dev.system.model.vo.system.user.CurrentLoginUserVO;
+import io.github.zhc.dev.system.model.vo.system.user.SystemUserLoginVO;
+import io.github.zhc.dev.system.service.system.user.SystemUserService;
 import io.github.zhc.dev.system.utils.utils.BCryptUtils;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;

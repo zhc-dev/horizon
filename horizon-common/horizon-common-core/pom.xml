@@ -61,6 +61,12 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper-spring-boot-starter.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class PageQueryDTO {
+public class PageQueryRequest {
     @Schema(description = "每页条数")
     private Integer pageSize = 10;
 

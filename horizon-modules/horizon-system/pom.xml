@@ -41,6 +41,8 @@
             <artifactId>horizon-common-redis</artifactId>
             <version>${horizon-common-redis.version}</version>
         </dependency>
+
+
     </dependencies>
 
 </project>

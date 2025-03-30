@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.model.dto;
+package io.github.zhc.dev.system.model.dto.system.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
