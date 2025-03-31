@@ -7,10 +7,8 @@ import io.github.zhc.dev.system.service.question.QuestionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +24,7 @@ public class QuestionController extends BaseController {
     private QuestionService questionService;
 
     @GetMapping("/list")
-    public TableData list(@Validated @RequestBody @NotNull QuestionQueryRequest questionQueryRequest) {
+    public TableData list(@Validated @NotNull QuestionQueryRequest questionQueryRequest) {
         return getTableData(questionService.list(questionQueryRequest));
     }
 }
