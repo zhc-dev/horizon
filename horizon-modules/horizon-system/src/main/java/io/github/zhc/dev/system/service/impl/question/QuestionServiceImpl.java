@@ -1,11 +1,7 @@
 package io.github.zhc.dev.system.service.impl.question;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import io.github.zhc.dev.common.core.model.entity.TableData;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.security.exception.ServiceException;
 import io.github.zhc.dev.system.mapper.question.QuestionMapper;
