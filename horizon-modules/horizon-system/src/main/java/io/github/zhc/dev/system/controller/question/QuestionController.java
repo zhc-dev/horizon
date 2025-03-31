@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zhc.dev
@@ -32,7 +29,7 @@ public class QuestionController extends BaseController {
     }
 
     @PostMapping("/add")
-    public R<Void> add(@Validated @NotNull QuestionAddRequest questionAddRequest) {
+    public R<Void> add(@Validated @NotNull @RequestBody QuestionAddRequest questionAddRequest) {
         return toR(questionService.add(questionAddRequest));
     }
 }

@@ -35,5 +35,5 @@ public class Question extends BaseEntity {
 
     private String defaultCode;
 
-    private String mainFuc;
+    private String mainFunc;
 }

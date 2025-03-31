@@ -33,5 +33,5 @@ public class QuestionAddRequest {
     private String defaultCode;
 
     @Schema(description = "main函数")
-    private String mainFuc;
+    private String mainFunc;
 }
