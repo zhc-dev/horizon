@@ -27,7 +27,7 @@ CREATE TABLE tb_question
     `content`       VARCHAR(1000)   NOT NULL COMMENT '题目内容',
     `question_case` VARCHAR(1000) COMMENT '题目用例',
     `default_code`  VARCHAR(500)    NOT NULL COMMENT '默认代码块',
-    `main_fuc`      VARCHAR(500)    NOT NULL COMMENT 'main函数',
+    `main_func`      VARCHAR(500)    NOT NULL COMMENT 'main函数',
     `create_by`     BIGINT UNSIGNED NOT NULL COMMENT '创建人',
     `create_time`   DATETIME        NOT NULL COMMENT '创建时间',
     `update_by`     BIGINT UNSIGNED COMMENT '更新人',

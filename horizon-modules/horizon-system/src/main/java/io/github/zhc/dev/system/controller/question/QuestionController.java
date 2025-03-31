@@ -3,6 +3,7 @@ package io.github.zhc.dev.system.controller.question;
 import io.github.zhc.dev.common.core.controller.BaseController;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.entity.TableData;
+import io.github.zhc.dev.system.model.dto.question.QuestionAddRequest;
 import io.github.zhc.dev.system.model.dto.question.QuestionQueryRequest;
 import io.github.zhc.dev.system.service.question.QuestionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,7 +32,7 @@ public class QuestionController extends BaseController {
     }
 
     @PostMapping("/add")
-    public R<Void> add(@Validated @NotNull QuestionQueryRequest questionQueryRequest) {
-        return toR(questionService.add(questionQueryRequest));
+    public R<Void> add(@Validated @NotNull QuestionAddRequest questionAddRequest) {
+        return toR(questionService.add(questionAddRequest));
     }
 }
