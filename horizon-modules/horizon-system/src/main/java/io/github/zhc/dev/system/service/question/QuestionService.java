@@ -2,7 +2,9 @@ package io.github.zhc.dev.system.service.question;
 
 import io.github.zhc.dev.common.core.model.entity.TableData;
 import io.github.zhc.dev.system.model.dto.question.QuestionAddRequest;
+import io.github.zhc.dev.system.model.dto.question.QuestionEditRequest;
 import io.github.zhc.dev.system.model.dto.question.QuestionQueryRequest;
+import io.github.zhc.dev.system.model.vo.question.QuestionDetailVO;
 import io.github.zhc.dev.system.model.vo.question.QuestionVO;
 
 import java.util.List;
@@ -27,4 +29,28 @@ public interface QuestionService {
      * @return 添加结果(受影响的行数)
      */
     int add(QuestionAddRequest questionAddRequest);
+
+    /**
+     * 查询题目详情
+     *
+     * @param questionId 题目id
+     * @return 题目详情
+     */
+    QuestionDetailVO detail(Long questionId);
+
+    /**
+     * 修改题目
+     *
+     * @param questionEditRequest 修改请求
+     * @return 修改结果(受影响的行数)
+     */
+    int edit(QuestionEditRequest questionEditRequest);
+
+    /**
+     * 删除题目
+     *
+     * @param questionId 题目id
+     * @return 删除结果(受影响的行数)
+     */
+    int delete(Long questionId);
 }

@@ -6,10 +6,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.github.zhc.dev.common.core.model.entity.TableData;
+import io.github.zhc.dev.common.core.model.enums.ResultCode;
+import io.github.zhc.dev.security.exception.ServiceException;
 import io.github.zhc.dev.system.mapper.question.QuestionMapper;
 import io.github.zhc.dev.system.model.dto.question.QuestionAddRequest;
+import io.github.zhc.dev.system.model.dto.question.QuestionEditRequest;
 import io.github.zhc.dev.system.model.dto.question.QuestionQueryRequest;
 import io.github.zhc.dev.system.model.entity.question.Question;
+import io.github.zhc.dev.system.model.vo.question.QuestionDetailVO;
 import io.github.zhc.dev.system.model.vo.question.QuestionVO;
 import io.github.zhc.dev.system.service.question.QuestionService;
 import jakarta.annotation.Resource;
@@ -51,4 +55,51 @@ public class QuestionServiceImpl implements QuestionService {
         BeanUtil.copyProperties(questionAddRequest, question);
         return questionMapper.insert(question);
     }
+
+    /**
+     * 查询题目详情
+     *
+     * @param questionId 题目id
+     * @return 题目详情
+     */
+    @Override
+    public QuestionDetailVO detail(Long questionId) {
+        Question question = questionMapper.selectById(questionId);
+        if (question == null) throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+        QuestionDetailVO questionDetailVO = new QuestionDetailVO();
+        BeanUtil.copyProperties(question, questionDetailVO);
+        return questionDetailVO;
+    }
+
+    /**
+     * 修改题目
+     *
+     * @param questionEditRequest 修改请求
+     * @return 修改结果(受影响的行数)
+     */
+    @Override
+    public int edit(QuestionEditRequest questionEditRequest) {
+        Question oldQuestion = questionMapper.selectById(questionEditRequest.getQuestionId());
+        if (oldQuestion == null) throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+
+        // 封装题目
+        oldQuestion.setTitle(questionEditRequest.getTitle());
+        oldQuestion.setDifficulty(questionEditRequest.getDifficulty());
+        oldQuestion.setTimeLimit(questionEditRequest.getTimeLimit());
+        oldQuestion.setSpaceLimit(questionEditRequest.getSpaceLimit());
+        oldQuestion.setContent(questionEditRequest.getContent());
+        oldQuestion.setQuestionCase(questionEditRequest.getQuestionCase());
+        oldQuestion.setDefaultCode(questionEditRequest.getDefaultCode());
+        oldQuestion.setMainFunc(questionEditRequest.getMainFunc());
+
+        return questionMapper.updateById(oldQuestion);
+    }
+
+    @Override
+    public int delete(Long questionId) {
+        Question question = questionMapper.selectById(questionId);
+        if (question == null) throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+        return questionMapper.deleteById(questionId);
+    }
+
 }
