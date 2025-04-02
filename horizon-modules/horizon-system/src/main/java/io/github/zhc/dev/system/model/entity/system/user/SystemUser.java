@@ -25,6 +25,9 @@ public class SystemUser extends BaseEntity implements Serializable {
     private String userAccount;
     private String userPassword;
     private String nickName;
+    private Integer grade;
+    private Integer active;
+
 
 
     @Serial
