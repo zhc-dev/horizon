@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.model.entity.question;
+package io.github.zhc.dev.system.model.entity.contest;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -8,22 +8,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 题目实体
- *
  * @author zhc.dev
- * @date 2025/3/30 22:37
+ * @date 2025/4/2 22:15
  */
-@TableName("tb_question")
 @Getter
 @Setter
-public class Question extends BaseEntity {
+@TableName("tb_contest_question")
+public class ContestQuestion extends BaseEntity {
     @TableId(type = IdType.ASSIGN_ID)
+    private Long contestQuestionId;
+    private Long contestId;
     private Long questionId;
-    private String title;
-    private Integer difficulty;
-    private String content;
-    private String tags;
-    private String source;
-    private String hint;
-    private String isDeleted;
+    private Integer displayOrder;
+    private String displayTitle;
+    private Integer score;
+    private Integer isDeleted;
 }

@@ -27,8 +27,7 @@ public class SystemUser extends BaseEntity implements Serializable {
     private String nickName;
     private Integer grade;
     private Integer active;
-
-
+    private Integer isDeleted;
 
     @Serial
     private static final long serialVersionUID = 1L;
