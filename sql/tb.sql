@@ -44,7 +44,7 @@ CREATE TABLE `tb_language`
 (
     `language_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '语言ID (主键)',
     `name`        VARCHAR(20)     NOT NULL COMMENT '语言名称 (Java 11, Python 3.9, C++17)',
-    `is_enabled`  BOOLEAN         NOT NULL DEFAULT TRUE COMMENT '是否物理启用该语言选项 (1:启用, 0:禁用)',
+    `is_enabled`  TINYINT(1)         NOT NULL DEFAULT TRUE COMMENT '是否物理启用该语言选项 (1:启用, 0:禁用)',
     `create_by`   BIGINT UNSIGNED          DEFAULT NULL COMMENT '创建者ID',
     `create_time` DATETIME        NOT NULL COMMENT '创建时间',
     `update_by`   BIGINT UNSIGNED          DEFAULT NULL COMMENT '最后更新者ID',
