@@ -81,13 +81,12 @@ public class QuestionServiceImpl implements QuestionService {
         // 封装题目
         oldQuestion.setTitle(questionEditRequest.getTitle());
         oldQuestion.setDifficulty(questionEditRequest.getDifficulty());
-        oldQuestion.setTimeLimit(questionEditRequest.getTimeLimit());
-        oldQuestion.setSpaceLimit(questionEditRequest.getSpaceLimit());
+//        oldQuestion.setTimeLimit(questionEditRequest.getTimeLimit());
+//        oldQuestion.setSpaceLimit(questionEditRequest.getSpaceLimit());
         oldQuestion.setContent(questionEditRequest.getContent());
-        oldQuestion.setQuestionCase(questionEditRequest.getQuestionCase());
-        oldQuestion.setDefaultCode(questionEditRequest.getDefaultCode());
-        oldQuestion.setMainFunc(questionEditRequest.getMainFunc());
-
+//        oldQuestion.setQuestionCase(questionEditRequest.getQuestionCase());
+//        oldQuestion.setDefaultCode(questionEditRequest.getDefaultCode());
+//        oldQuestion.setMainFunc(questionEditRequest.getMainFunc());
         return questionMapper.updateById(oldQuestion);
     }
 

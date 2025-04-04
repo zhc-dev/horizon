@@ -31,4 +31,8 @@ public class BCryptUtils {
     public static boolean matches(String original, String ciphertext) {
         return encoder.matches(original, ciphertext);
     }
+
+    public static void main(String[] args) {
+        System.out.println(encrypt("content@horizon"));
+    }
 }
