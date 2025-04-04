@@ -13,6 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionAddRequest {
+    @Schema(description = "题目id")
+    private Long questionId;
+
     @Schema(description = "题目标题")
     private String title;
 

@@ -11,6 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionLanguageRequest {
+    @Schema(description = "题目语言id")
+    private Long questionLanguageId;
+
     @Schema(description = "编程语言id")
     private Long languageId;
 

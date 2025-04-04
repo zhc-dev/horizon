@@ -11,6 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionEditRequest extends QuestionAddRequest {
+    @Schema(description = "编程语言列表")
+    private Long questionLanguageId;
+
     @Schema(description = "题目id")
     private Long questionId;
 }
