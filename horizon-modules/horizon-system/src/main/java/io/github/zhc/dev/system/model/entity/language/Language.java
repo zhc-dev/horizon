@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.model.entity.question;
+package io.github.zhc.dev.system.model.entity.language;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

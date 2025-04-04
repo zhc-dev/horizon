@@ -97,7 +97,7 @@ CREATE TABLE `tb_question`
 DROP TABLE IF EXISTS `tb_question_language`;
 CREATE TABLE `tb_question_language`
 (
-    `question_lang_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '题目语言详情ID (主键)',
+    `question_language_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '题目语言详情ID (主键)',
     `question_id`      BIGINT UNSIGNED NOT NULL COMMENT '题目ID (外键, 关联 tb_question)',
     `language_id`      BIGINT UNSIGNED NOT NULL COMMENT '语言ID (外键, 关联 tb_language)',
     `time_limit`       INT UNSIGNED    NOT NULL COMMENT '该语言的时间限制 (ms)',
@@ -109,7 +109,7 @@ CREATE TABLE `tb_question_language`
     `update_by`        BIGINT UNSIGNED          DEFAULT NULL COMMENT '最后更新者ID',
     `update_time`      DATETIME        NOT NULL COMMENT '最后更新时间',
     `is_deleted`       TINYINT(1)      NOT NULL DEFAULT 0 COMMENT '是否逻辑删除 (0:未删除, 1:已删除)',
-    PRIMARY KEY (`question_lang_id`),
+    PRIMARY KEY (`question_language_id`),
     UNIQUE KEY `uq_ql_active` (`question_id`, `language_id`, `is_deleted`),
     KEY `idx_ql_question_id` (`question_id`),
     KEY `idx_ql_language_id` (`language_id`),

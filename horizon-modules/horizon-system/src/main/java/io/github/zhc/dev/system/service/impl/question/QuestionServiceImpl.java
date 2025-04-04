@@ -1,15 +1,23 @@
 package io.github.zhc.dev.system.service.impl.question;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.security.exception.ServiceException;
+import io.github.zhc.dev.system.mapper.language.LanguageMapper;
+import io.github.zhc.dev.system.mapper.question.QuestionCaseMapper;
+import io.github.zhc.dev.system.mapper.question.QuestionLanguageMapper;
 import io.github.zhc.dev.system.mapper.question.QuestionMapper;
 import io.github.zhc.dev.system.model.dto.question.QuestionAddRequest;
 import io.github.zhc.dev.system.model.dto.question.QuestionEditRequest;
 import io.github.zhc.dev.system.model.dto.question.QuestionQueryRequest;
 import io.github.zhc.dev.system.model.entity.question.Question;
+import io.github.zhc.dev.system.model.entity.question.QuestionCase;
+import io.github.zhc.dev.system.model.entity.question.QuestionLanguage;
+import io.github.zhc.dev.system.model.vo.question.QuestionCaseVO;
 import io.github.zhc.dev.system.model.vo.question.QuestionDetailVO;
+import io.github.zhc.dev.system.model.vo.question.QuestionLanguageVO;
 import io.github.zhc.dev.system.model.vo.question.QuestionVO;
 import io.github.zhc.dev.system.service.question.QuestionService;
 import jakarta.annotation.Resource;
@@ -25,6 +33,15 @@ import java.util.List;
 public class QuestionServiceImpl implements QuestionService {
     @Resource
     private QuestionMapper questionMapper;
+
+    @Resource
+    private QuestionCaseMapper questionCaseMapper;
+
+    @Resource
+    QuestionLanguageMapper questionLanguageMapper;
+
+    @Resource
+    private LanguageMapper languageMapper;
 
     /**
      * 查询题目列表
@@ -61,9 +78,18 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionDetailVO detail(Long questionId) {
         Question question = questionMapper.selectById(questionId);
-        if (question == null) throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+        List<QuestionCase> cases = questionCaseMapper.selectList(new LambdaQueryWrapper<QuestionCase>().eq(QuestionCase::getQuestionId, questionId));
+        List<QuestionLanguage> languages = questionLanguageMapper.selectList(new LambdaQueryWrapper<QuestionLanguage>().eq(QuestionLanguage::getQuestionId, questionId));
+        if (question == null || cases == null || languages == null) throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
         QuestionDetailVO questionDetailVO = new QuestionDetailVO();
         BeanUtil.copyProperties(question, questionDetailVO);
+        List<QuestionCaseVO> casesVO = BeanUtil.copyToList(cases, QuestionCaseVO.class);
+        List<QuestionLanguageVO> languageVOS = BeanUtil.copyToList(languages, QuestionLanguageVO.class);
+        for (int i = 0; i < languages.size(); i++) {
+            languageVOS.get(i).setName(languageMapper.selectById(languages.get(i)).getName());
+        }
+        questionDetailVO.setCases(casesVO);
+        questionDetailVO.setLanguages(languageVOS);
         return questionDetailVO;
     }
 
