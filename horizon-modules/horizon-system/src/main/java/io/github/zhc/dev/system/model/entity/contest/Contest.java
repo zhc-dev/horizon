@@ -2,6 +2,7 @@ package io.github.zhc.dev.system.model.entity.contest;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.zhc.dev.common.core.model.entity.BaseEntity;
 import lombok.Getter;
@@ -26,5 +27,6 @@ public class Contest extends BaseEntity {
     private Integer status;
     private String password;
     private String allowedLanguage;
+    @TableLogic(value = "0", delval = "1")
     private Integer isDeleted;
 }
