@@ -1,5 +1,7 @@
 package io.github.zhc.dev.system.model.vo.contest;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ContestVO {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long contestId;
     private String title;
     private Integer status;

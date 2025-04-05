@@ -100,7 +100,7 @@ public class ContestServiceImpl implements ContestService {
         if (CollectionUtil.isEmpty(questionVOList)) {
             return contestDetailVO;
         }
-        contestDetailVO.setExamQuestionList(questionVOList);
+        contestDetailVO.setContestQuestionList(questionVOList);
         return contestDetailVO;
     }
 
@@ -113,6 +113,8 @@ public class ContestServiceImpl implements ContestService {
         contest.setTitle(contestEditRequest.getTitle());
         contest.setStartTime(contestEditRequest.getStartTime());
         contest.setEndTime(contestEditRequest.getEndTime());
+        contest.setDescription(contestEditRequest.getDescription());
+        contest.setAllowedLanguages(contestEditRequest.getAllowedLanguages());
         return contestMapper.updateById(contest);
     }
 

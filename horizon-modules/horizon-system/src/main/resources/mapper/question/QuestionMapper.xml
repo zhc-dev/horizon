@@ -30,6 +30,7 @@
                     #{id}
                 </foreach>
             </if>
+            AND tq.is_deleted = 0
         </where>
         ORDER BY
         create_time DESC

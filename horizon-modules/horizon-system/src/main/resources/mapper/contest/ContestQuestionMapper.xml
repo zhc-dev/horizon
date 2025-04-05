@@ -14,6 +14,7 @@
              on
                  teq.question_id = tq.question_id
         where contest_id = #{contestId}
+          AND teq.is_deleted = 0
         ORDER BY teq.display_order
     </select>
 </mapper>

@@ -6,31 +6,32 @@
 
     <select id="selectContestList" resultType="io.github.zhc.dev.system.model.vo.contest.ContestVO">
         SELECT
-        te.contest_id,
-        te.title,
-        te.start_time,
-        te.end_time,
-        te.create_time,
+        tc.contest_id,
+        tc.title,
+        tc.start_time,
+        tc.end_time,
+        tc.create_time,
         ts.nick_name as create_name,
-        te.status
+        tc.status
         FROM
-        tb_contest te
+        tb_contest tc
         left join
         tb_system_user ts
         on
-        te.create_by = ts.user_id
+        tc.create_by = ts.user_id
         <where>
             <if test="title !=null and title !='' ">
-                AND te.title LIKE CONCAT('%',#{title},'%')
+                AND tc.title LIKE CONCAT('%',#{title},'%')
             </if>
             <if test="startTime != null and startTime != '' ">
-                AND te.start_time >= #{startTime}
+                AND tc.start_time >= #{startTime}
             </if>
             <if test="endTime != null and endTime != ''">
-                AND te.end_time &lt;= #{endTime}
+                AND tc.end_time &lt;= #{endTime}
             </if>
+            AND tc.is_deleted = 0
         </where>
         ORDER BY
-        te.create_time DESC
+        tc.create_time DESC
     </select>
 </mapper>

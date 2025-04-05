@@ -25,5 +25,7 @@ public class ContestDetailVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endTime;
 
-    private List<QuestionVO> examQuestionList;
+    private List<QuestionVO> contestQuestionList;
+
+    private String allowedLanguages;
 }

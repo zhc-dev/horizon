@@ -46,6 +46,17 @@ public class ContestController extends BaseController {
     }
 
     /**
+     * 删除竞赛
+     *
+     * @param contestId 竞赛id
+     * @return 是否删除成功
+     */
+    @DeleteMapping("/delete")
+    public R<Void> delete(Long contestId) {
+        return toR(contestService.delete(contestId));
+    }
+
+    /**
      * 添加竞赛题目
      *
      * @param contestQuestionAddRequest 竞赛题目添加请求
@@ -88,17 +99,6 @@ public class ContestController extends BaseController {
     @PutMapping("/edit")
     public R<Void> edit(@RequestBody ContestEditRequest contestEditRequest) {
         return toR(contestService.edit(contestEditRequest));
-    }
-
-    /**
-     * 删除竞赛
-     *
-     * @param contestId 竞赛id
-     * @return 是否删除成功
-     */
-    @DeleteMapping("/delete")
-    public R<Void> delete(Long contestId) {
-        return toR(contestService.delete(contestId));
     }
 
     /**
