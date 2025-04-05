@@ -209,3 +209,28 @@ CREATE TABLE `tb_contest_question`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT ='竞赛与题目关联表';
+
+-- ----------------------------------------
+-- Table structure for tb_user
+-- ----------------------------------------
+
+CREATE TABLE `tb_user`
+(
+    user_id     BIGINT UNSIGNED NOT NULL COMMENT '用户id（主键）',
+    nick_name   VARCHAR(20) COMMENT '用户昵称',
+    head_image  VARCHAR(100) COMMENT '用户头像',
+    sex         TINYINT COMMENT '用户状态1: 男  2：女',
+    phone       CHAR(11)        NOT NULL COMMENT '手机号',
+    code        CHAR(6) COMMENT '验证码',
+    email       VARCHAR(32) COMMENT '邮箱',
+    wechat      VARCHAR(20) COMMENT '微信号',
+    school_name VARCHAR(20) COMMENT '学校',
+    major_name  VARCHAR(20) COMMENT '专业',
+    introduce   VARCHAR(100) COMMENT '个人介绍',
+    status      TINYINT         NOT NULL COMMENT '用户状态0: 拉黑  1：正常',
+    create_by   BIGINT UNSIGNED NOT NULL COMMENT '创建人',
+    create_time DATETIME        NOT NULL COMMENT '创建时间',
+    update_by   BIGINT UNSIGNED COMMENT '更新人',
+    update_time DATETIME COMMENT '更新时间',
+    PRIMARY KEY (`user_id`)
+)
