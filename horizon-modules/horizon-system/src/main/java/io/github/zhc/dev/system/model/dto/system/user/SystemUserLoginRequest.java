@@ -22,5 +22,4 @@ public class SystemUserLoginRequest {
     @Size(min = 8, max = 64, message = "密码长度需要在8-64之间")
     @Schema(description = "用户密码")
     private String userPassword;
-
 }

@@ -56,7 +56,6 @@ public class TokenService {
         String tokenKey = getJwtPayloadRedisKey(userId);
 
         Long expire = redisService.getExpire(tokenKey, TimeUnit.MINUTES);
-        // 720min(12 小时) 仅剩余180min(3小时) 时进行延长
         if (expire != null && expire < CacheConstants.JWT_TOKEN_REFRESH_THRESHOLD_MINUTES)
             redisService.expire(tokenKey, CacheConstants.JWT_TOKEN_DEFAULT_EXPIRATION_MINUTES, TimeUnit.MINUTES);
     }

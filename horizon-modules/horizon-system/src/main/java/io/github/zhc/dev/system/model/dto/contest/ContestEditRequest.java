@@ -10,5 +10,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContestEditRequest extends ContestAddRequest {
-    private Long examId;
+    private Long contestId;
 }

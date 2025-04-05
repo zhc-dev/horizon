@@ -8,7 +8,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>io.github.zhc-dev</groupId>
     <artifactId>horizon</artifactId>
@@ -23,21 +23,21 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <spring-boot.version>3.0.1</spring-boot.version>
-        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
-        <spring-cloud.version>2022.0.0</spring-cloud.version>
-        <mybatis-plus.version>3.5.5</mybatis-plus.version>
-        <horizon-common-core.version>1.0-SNAPSHOT</horizon-common-core.version>
-        <commons-lang3.vsersion>3.12.0</commons-lang3.vsersion>
-        <springdoc-openapi-starter-webmvc-ui.version>2.2.0</springdoc-openapi-starter-webmvc-ui.version>
-        <horizon-swagger.version>1.0-SNAPSHOT</horizon-swagger.version>
-        <horizon-common-security.version>1.0-SNAPSHOT</horizon-common-security.version>
         <fastjson2.version>2.0.43</fastjson2.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
+        <commons-lang3.vsersion>3.12.0</commons-lang3.vsersion>
+        <horizon-swagger.version>1.0-SNAPSHOT</horizon-swagger.version>
+        <horizon-common-core.version>1.0-SNAPSHOT</horizon-common-core.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+        <horizon-common-security.version>1.0-SNAPSHOT</horizon-common-security.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.2.0</springdoc-openapi-starter-webmvc-ui.version>
         <horizon-common-redis.version>1.0-SNAPSHOT</horizon-common-redis.version>
         <jjwt-api.version>0.11.5</jjwt-api.version>
         <jjwt-impl.version>0.11.5</jjwt-impl.version>
+        <hutool-all.version>5.8.22</hutool-all.version>
         <jjwt-jackson.version>0.11.5</jjwt-jackson.version>
         <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
-        <hutool-all.version>5.8.22</hutool-all.version>
         <horizon-common-mybatis.version>1.0-SNAPSHOT</horizon-common-mybatis.version>
         <pagehelper-spring-boot-starter.version>2.0.0</pagehelper-spring-boot-starter.version>
     </properties>
@@ -80,5 +80,4 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>

@@ -13,5 +13,4 @@ public class LanguageVO {
     private Long languageId;
     private String name;
     private Integer isEnabled;
-    private Integer isDeleted;
 }

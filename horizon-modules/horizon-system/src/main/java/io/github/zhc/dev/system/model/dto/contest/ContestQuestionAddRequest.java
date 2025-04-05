@@ -12,6 +12,6 @@ import java.util.LinkedHashSet;
 @Getter
 @Setter
 public class ContestQuestionAddRequest {
-    private Long examId;
+    private Long contestId;
     private LinkedHashSet<Long> questionIdSet;
 }

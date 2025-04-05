@@ -8,7 +8,11 @@ GRANT ALTER,CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_dev.* TO `ho
 GRANT ALTER,CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_nacos_dev.* TO `horizon`@`%`;
 # 选中数据库
 USE horizon_dev;
-# 创建测试表
+
+-- ---------------------------
+-- Table structure for tb_test
+-- ---------------------------
+
 CREATE TABLE `tb_test`
 (
     `test_id` BIGINT UNSIGNED NOT NULL,

@@ -53,7 +53,6 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public List<ContestVO> list(ContestQueryRequest contestQueryRequest) {
-        // 开始分页查询,查询前会先执行count, 所以不需要再查询总数了
         PageHelper.startPage(contestQueryRequest.getPageNum(), contestQueryRequest.getPageSize());
         return contestMapper.selectContestList(contestQueryRequest);
     }
@@ -69,15 +68,12 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public boolean questionAdd(ContestQuestionAddRequest contestQuestionAddRequest) {
-        Contest contest = getContest(contestQuestionAddRequest.getExamId());
+        Contest contest = getContest(contestQuestionAddRequest.getContestId());
         checkContest(contest);
-        if (Constants.TRUE.equals(contest.getStatus())) {
-            throw new ServiceException(ResultCode.CONTEST_IS_PUBLISH);
-        }
+        if (Constants.TRUE.equals(contest.getStatus())) throw new ServiceException(ResultCode.CONTEST_IS_PUBLISH);
         Set<Long> questionIdSet = contestQuestionAddRequest.getQuestionIdSet();
-        if (CollectionUtil.isEmpty(questionIdSet)) {
-            return true;
-        }
+        if (CollectionUtil.isEmpty(questionIdSet)) return true;
+
         List<Question> questionList = questionMapper.selectBatchIds(questionIdSet);
         if (CollectionUtil.isEmpty(questionList) || questionList.size() < questionIdSet.size()) {
             throw new ServiceException(ResultCode.CONTEST_QUESTION_NOT_EXISTS);
@@ -89,9 +85,7 @@ public class ContestServiceImpl implements ContestService {
     public int questionDelete(Long contestId, Long questionId) {
         Contest contest = getContest(contestId);
         checkContest(contest);
-        if (Constants.TRUE.equals(contest.getStatus())) {
-            throw new ServiceException(ResultCode.CONTEST_IS_PUBLISH);
-        }
+        if (Constants.TRUE.equals(contest.getStatus())) throw new ServiceException(ResultCode.CONTEST_IS_PUBLISH);
         return contestQuestionMapper.delete(new LambdaQueryWrapper<ContestQuestion>()
                 .eq(ContestQuestion::getContestId, contestId)
                 .eq(ContestQuestion::getQuestionId, questionId));
@@ -112,12 +106,10 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public int edit(ContestEditRequest contestEditRequest) {
-        Contest contest = getContest(contestEditRequest.getExamId());
-        if (Constants.TRUE.equals(contest.getStatus())) {
-            throw new ServiceException(ResultCode.CONTEST_IS_PUBLISH);
-        }
+        Contest contest = getContest(contestEditRequest.getContestId());
+        if (Constants.TRUE.equals(contest.getStatus())) throw new ServiceException(ResultCode.CONTEST_IS_PUBLISH);
         checkContest(contest);
-        checkContestSaveParams(contestEditRequest, contestEditRequest.getExamId());
+        checkContestSaveParams(contestEditRequest, contestEditRequest.getContestId());
         contest.setTitle(contestEditRequest.getTitle());
         contest.setStartTime(contestEditRequest.getStartTime());
         contest.setEndTime(contestEditRequest.getEndTime());
