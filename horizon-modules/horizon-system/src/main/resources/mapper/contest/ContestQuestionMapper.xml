@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.zhc.dev.system.mapper.contest.ContestQuestionMapper">
+
+    <select id="selectContestQuestionList" resultType="io.github.zhc.dev.system.model.vo.question.QuestionVO">
+        SELECT tq.question_id,
+               tq.title,
+               tq.difficulty
+        FROM tb_contest_question teq
+                 join
+             tb_question tq
+             on
+                 teq.question_id = tq.question_id
+        where contest_id = #{contestId}
+        ORDER BY teq.display_order
+    </select>
+</mapper>

@@ -1,6 +1,5 @@
 package io.github.zhc.dev.system.service.question;
 
-import io.github.zhc.dev.common.core.model.entity.TableData;
 import io.github.zhc.dev.system.model.dto.question.QuestionAddRequest;
 import io.github.zhc.dev.system.model.dto.question.QuestionEditRequest;
 import io.github.zhc.dev.system.model.dto.question.QuestionQueryRequest;

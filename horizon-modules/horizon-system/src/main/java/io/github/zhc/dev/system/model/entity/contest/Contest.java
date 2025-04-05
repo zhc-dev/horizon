@@ -25,7 +25,6 @@ public class Contest extends BaseEntity {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Integer status;
-    private String password;
     private String allowedLanguage;
     @TableLogic(value = "0", delval = "1")
     private Integer isDeleted;
