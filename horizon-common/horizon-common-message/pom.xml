@@ -5,20 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.zhc-dev</groupId>
-        <artifactId>horizon</artifactId>
+        <artifactId>horizon-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>horizon-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>horizon-swagger</module>
-        <module>horizon-common-core</module>
-        <module>horizon-common-security</module>
-        <module>horizon-common-redis</module>
-        <module>horizon-common-mybatis</module>
-        <module>horizon-common-message</module>
-    </modules>
+    <artifactId>horizon-common-message</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -26,4 +17,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
+    </dependencies>
 </project>
