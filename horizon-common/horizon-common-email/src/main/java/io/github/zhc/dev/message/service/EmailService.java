@@ -32,11 +32,8 @@ public class EmailService {
      * @param to 收件人邮箱
      * @return 发送结果
      */
-    public String sendVerificationCode(String to) {
+    public String sendVerificationCode(String verificationCode, String to) {
         try {
-            // 生成6位数验证码
-            String verificationCode = RandomUtil.randomNumbers(6);
-
             // 将验证码转为字符数组以便在模板中遍历
             char[] verifyCodeArray = verificationCode.toCharArray();
 

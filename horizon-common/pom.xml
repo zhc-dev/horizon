@@ -17,7 +17,7 @@
         <module>horizon-common-security</module>
         <module>horizon-common-redis</module>
         <module>horizon-common-mybatis</module>
-        <module>horizon-common-message</module>
+        <module>horizon-common-email</module>
     </modules>
 
     <properties>
