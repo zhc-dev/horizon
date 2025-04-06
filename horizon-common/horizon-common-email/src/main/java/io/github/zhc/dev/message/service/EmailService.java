@@ -1,6 +1,5 @@
 package io.github.zhc.dev.message.service;
 
-import cn.hutool.core.util.RandomUtil;
 import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -32,7 +31,7 @@ public class EmailService {
      * @param to 收件人邮箱
      * @return 发送结果
      */
-    public String sendVerificationCode(String verificationCode, String to) {
+    public boolean sendVerificationCode(String verificationCode, String to) {
         try {
             // 将验证码转为字符数组以便在模板中遍历
             char[] verifyCodeArray = verificationCode.toCharArray();
@@ -55,10 +54,10 @@ public class EmailService {
             // 发送邮件
             mailSender.send(message);
 
-            return verificationCode;
+            return true;
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 }

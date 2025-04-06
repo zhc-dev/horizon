@@ -1,4 +1,4 @@
-package io.github.zhc.dev.message.service;
+package io.github.zhc.dev.message;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

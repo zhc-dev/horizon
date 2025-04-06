@@ -28,16 +28,15 @@ public enum ResultCode {//操作唱功
     FAILED_ALREADY_EXISTS(3004, "资源已存在"),
 
 
-
     AILED_USER_EXISTS(3101, "用户已存在"),
     FAILED_USER_NOT_EXISTS(3102, "用户不存在"),
     FAILED_LOGIN(3103, "账号或密码错误"),
     FAILED_USER_BANNED(3104, "您已被列入黑名单, 请联系管理员."),
-    FAILED_USER_PHONE(3105, "您输入的手机号有误"),
+    FAILED_USER_EMAIL(3105, "您输入的邮箱有误"),
 
     FAILED_FREQUENT(3106, "操作频繁，请稍后重试"),
 
-    FAILED_TIME_LIMIT(3107, "当天请求次数已达到上限"),
+    FAILED_TIMES_LIMIT(3107, "当天请求次数已达到上限"),
 
     FAILED_SEND_CODE(3108, "验证码发送错误"),
 
