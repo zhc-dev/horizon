@@ -24,4 +24,9 @@ public class UserController extends BaseController {
     public R<Void> sendCode(@RequestBody UserRequest userRequest) {
         return toR(userService.sendCode(userRequest));
     }
+
+    @PostMapping("/code/login")
+    public R<String> codeLogin(@RequestBody UserRequest userRequest) {
+        return R.ok(userService.codeLogin(userRequest.getEmail(), userRequest.getCode()));
+    }
 }

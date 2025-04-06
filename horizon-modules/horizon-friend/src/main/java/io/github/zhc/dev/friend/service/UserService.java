@@ -8,4 +8,6 @@ import io.github.zhc.dev.friend.model.dto.UserRequest;
  */
 public interface UserService {
     boolean sendCode(UserRequest userRequest);
+
+    String codeLogin(String email, String code);
 }

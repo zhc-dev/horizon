@@ -1,13 +1,21 @@
 package io.github.zhc.dev.friend.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.zhc.dev.common.core.constants.CacheConstants;
+import io.github.zhc.dev.common.core.constants.Constants;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
+import io.github.zhc.dev.common.core.model.enums.UserIdentity;
+import io.github.zhc.dev.common.core.model.enums.UserStatus;
+import io.github.zhc.dev.friend.mapper.UserMapper;
 import io.github.zhc.dev.friend.model.dto.UserRequest;
+import io.github.zhc.dev.friend.model.entity.User;
 import io.github.zhc.dev.friend.service.UserService;
 import io.github.zhc.dev.message.service.EmailService;
 import io.github.zhc.dev.redis.service.RedisService;
 import io.github.zhc.dev.security.exception.ServiceException;
+import io.github.zhc.dev.security.service.TokenService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,9 +40,17 @@ public class UserServiceImpl implements UserService {
     @Value("${mail.code.expiration:5}")
     private Long emailCodeExpire;
 
-    @Value("${mail.code.send.limit:3}")
+    @Value("${mail.code.send.limit:50}")
     private Long emailCodeSendLimit;
 
+    @Resource
+    private UserMapper userMapper;
+
+    @Resource
+    private TokenService tokenService;
+
+    @Value("${jwt.secret}")
+    private String secret;
 
     @Override
     public boolean sendCode(UserRequest userRequest) {
@@ -62,6 +78,21 @@ public class UserServiceImpl implements UserService {
         return res;
     }
 
+    @Override
+    public String codeLogin(String email, String code) {
+        checkCode(email, code);
+        User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getEmail, email));
+        if (user == null) {  //新用户
+            //注册逻辑
+            user = new User();
+            user.setEmail(email);
+            user.setStatus(UserStatus.Normal.getValue());
+            user.setCreateBy(Constants.SYSTEM_USER_ID);
+            userMapper.insert(user);
+        }
+        return tokenService.createToken(user.getUserId(), secret, UserIdentity.ORDINARY.getValue(), user.getNickName(), user.getHeadImage());
+    }
+
     /**
      * 校验手机号
      *
@@ -75,11 +106,42 @@ public class UserServiceImpl implements UserService {
         return pattern.matcher(email).matches();
     }
 
+    /**
+     * 获取邮箱验证码缓存key
+     *
+     * @param email 邮箱
+     * @return 缓存key
+     */
     private String getEmailCodeKey(String email) {
         return CacheConstants.EMAIL_CODE_KEY + email;
     }
 
+    /**
+     * 获取邮箱验证码发送次数缓存key
+     *
+     * @param email 邮箱
+     * @return 缓存key
+     */
     private String getEmailCodeTimesKey(String email) {
         return CacheConstants.EMAIL_CODE_TIMES_KEY + email;
+    }
+
+    /**
+     * 校验验证码
+     *
+     * @param email 邮箱
+     * @param code  验证码
+     */
+    private void checkCode(String email, String code) {
+        String emailCodeKey = getEmailCodeKey(email);
+        String cacheCode = redisService.getCacheObject(emailCodeKey, String.class);
+        if (StrUtil.isEmpty(cacheCode)) {
+            throw new ServiceException(ResultCode.FAILED_INVALID_CODE);
+        }
+        if (!cacheCode.equals(code)) {
+            throw new ServiceException(ResultCode.FAILED_ERROR_CODE);
+        }
+        //验证码比对成功
+        redisService.deleteObject(emailCodeKey);
     }
 }

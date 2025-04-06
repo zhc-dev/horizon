@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.github.zhc.dev.common.core.model.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("tb_user")
-public class User {
+public class User extends BaseEntity {
     @JsonSerialize(using = ToStringSerializer.class)
     @TableId(value = "USER_ID", type = IdType.ASSIGN_ID)
     private Long userId;

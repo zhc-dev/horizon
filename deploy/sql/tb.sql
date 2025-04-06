@@ -220,7 +220,7 @@ CREATE TABLE `tb_user`
     nick_name   VARCHAR(20) COMMENT '用户昵称',
     head_image  VARCHAR(100) COMMENT '用户头像',
     sex         TINYINT COMMENT '用户状态1: 男  2：女',
-    phone       CHAR(11)        NOT NULL COMMENT '手机号',
+    phone       CHAR(11) DEFAULT NULL COMMENT '手机号',
     code        CHAR(6) COMMENT '验证码',
     email       VARCHAR(32) COMMENT '邮箱',
     wechat      VARCHAR(20) COMMENT '微信号',
