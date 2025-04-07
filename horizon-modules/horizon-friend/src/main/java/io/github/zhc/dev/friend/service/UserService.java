@@ -10,4 +10,6 @@ public interface UserService {
     boolean sendCode(UserRequest userRequest);
 
     String codeLogin(String email, String code);
+
+    boolean logout(String token);
 }

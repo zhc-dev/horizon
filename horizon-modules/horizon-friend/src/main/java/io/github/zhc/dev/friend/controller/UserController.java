@@ -1,14 +1,12 @@
 package io.github.zhc.dev.friend.controller;
 
+import io.github.zhc.dev.common.core.constants.HttpConstants;
 import io.github.zhc.dev.common.core.controller.BaseController;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.friend.model.dto.UserRequest;
 import io.github.zhc.dev.friend.service.UserService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zhc.dev
@@ -28,5 +26,10 @@ public class UserController extends BaseController {
     @PostMapping("/code/login")
     public R<String> codeLogin(@RequestBody UserRequest userRequest) {
         return R.ok(userService.codeLogin(userRequest.getEmail(), userRequest.getCode()));
+    }
+
+    @DeleteMapping("/logout")
+    public R<Void> logout(@RequestHeader(HttpConstants.AUTHENTICATION) String token) {
+        return toR(userService.logout(token));
     }
 }

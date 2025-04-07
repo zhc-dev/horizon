@@ -16,15 +16,15 @@ public interface CacheConstants {
     String EMAIL_CODE_KEY = "email:code:"; // 邮箱验证码
     String EMAIL_CODE_TIMES_KEY = "email:code:times:"; // 邮箱验证码发送次数
 
-    String CONTEST_UNFINISHED_LIST = "e:t:l"; // 未完赛竞赛列表
+    String CONTEST_UNFINISHED_LIST = "contest:unfinished:list"; // 未完赛竞赛列表
 
-    String EXAM_HISTORY_LIST = "e:h:l";  // 历史竞赛列表
+    String EXAM_HISTORY_LIST = "contest:history:list";  // 历史竞赛列表
 
-    String CONTEST_DETAIL = "e:d:";    //竞赛详情信息
+    String CONTEST_DETAIL = "contest:detail:";    //竞赛详情信息
 
-    String USER_EXAM_LIST = "u:e:l:";   //用户竞赛列表
+    String USER_EXAM_LIST = "user:contest:list:";   //用户竞赛列表
 
-    public final static String USER_DETAIL = "u:d:";   //用户详情信息
+    public final static String USER_DETAIL = "user:detail:";   //用户详情信息
 
     long USER_EXP = 10;
     String USER_UPLOAD_TIMES_KEY = "u:u:t";
@@ -33,7 +33,7 @@ public interface CacheConstants {
 
     String QUESTION_HOST_LIST = "q:h:l";
 
-    String CONTEST_QUESTION_LIST = "e:q:l:";
+    String CONTEST_QUESTION_LIST = "contest:question:list:";
 
     String USER_MESSAGE_LIST = "u:m:l:";
 

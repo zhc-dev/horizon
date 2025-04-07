@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.zhc.dev.common.core.constants.CacheConstants;
 import io.github.zhc.dev.common.core.constants.Constants;
+import io.github.zhc.dev.common.core.constants.HttpConstants;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserIdentity;
 import io.github.zhc.dev.common.core.model.enums.UserStatus;
@@ -92,6 +93,15 @@ public class UserServiceImpl implements UserService {
         }
         return tokenService.createToken(user.getUserId(), secret, UserIdentity.ORDINARY.getValue(), user.getNickName(), user.getHeadImage());
     }
+
+    @Override
+    public boolean logout(String token) {
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+        return tokenService.deleteLoginUser(token, secret);
+    }
+
 
     /**
      * 校验手机号

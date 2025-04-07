@@ -67,7 +67,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         SystemUserLoginVO systemUserLoginVO = new SystemUserLoginVO();
         BeanUtils.copyProperties(systemUser, systemUserLoginVO);
         // 将令牌返回到前端
-        systemUserLoginVO.setToken(tokenService.createToken(systemUser.getUserId(), secret, UserRole.ADMIN.getValue(), systemUser.getNickName()));
+        systemUserLoginVO.setToken(tokenService.createToken(systemUser.getUserId(), secret, UserRole.ADMIN.getValue(), systemUser.getNickName(), null));
 
         return R.ok(systemUserLoginVO);
     }
