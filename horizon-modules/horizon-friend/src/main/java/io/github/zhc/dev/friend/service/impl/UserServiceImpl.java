@@ -9,6 +9,7 @@ import io.github.zhc.dev.common.core.constants.HttpConstants;
 import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
+import io.github.zhc.dev.common.core.model.enums.UserRole;
 import io.github.zhc.dev.common.core.model.enums.UserStatus;
 import io.github.zhc.dev.friend.mapper.UserMapper;
 import io.github.zhc.dev.friend.model.dto.UserRequest;
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
             user.setCreateBy(Constants.SYSTEM_USER_ID);
             userMapper.insert(user);
         }
-        return tokenService.createToken(user.getUserId(), secret, user.getNickName(), user.getHeadImage());
+        return tokenService.createToken(user.getUserId(), secret, UserRole.ORDINARY.getValue(), user.getNickName(), user.getHeadImage());
     }
 
     @Override

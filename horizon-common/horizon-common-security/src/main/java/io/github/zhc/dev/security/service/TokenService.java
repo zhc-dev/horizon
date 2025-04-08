@@ -27,7 +27,7 @@ public class TokenService {
     @Resource
     private RedisService redisService;
 
-    public String createToken(Long userId, String secret, String nickName, String headImage) {
+    public String createToken(Long userId, String secret, Integer role,String nickName, String headImage) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtConstant.USER_ID, userId);
         // 生成token
@@ -36,6 +36,7 @@ public class TokenService {
         String key = CacheConstants.JWT_PAYLOAD_REDIS_KEY_PREFIX + userId;
         // redis value
         LoginUserVO loginUserVO = new LoginUserVO();
+        loginUserVO.setRole(role);
         loginUserVO.setNickName(nickName);
         loginUserVO.setHeadImage(headImage);
         // put cache
