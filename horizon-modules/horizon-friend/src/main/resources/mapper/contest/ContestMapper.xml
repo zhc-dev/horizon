@@ -14,6 +14,8 @@
         tb_contest tc
         where
         tc.is_deleted = 0
+        AND
+        tc.status = 1
         <if test="title != null and title.trim() != ''">
             AND tc.title LIKE CONCAT('%',#{title},'%')
         </if>
