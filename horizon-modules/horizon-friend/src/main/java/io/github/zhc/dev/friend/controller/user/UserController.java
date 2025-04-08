@@ -1,11 +1,11 @@
-package io.github.zhc.dev.friend.controller;
+package io.github.zhc.dev.friend.controller.user;
 
 import io.github.zhc.dev.common.core.constants.HttpConstants;
 import io.github.zhc.dev.common.core.controller.BaseController;
 import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
-import io.github.zhc.dev.friend.model.dto.UserRequest;
-import io.github.zhc.dev.friend.service.UserService;
+import io.github.zhc.dev.friend.model.dto.user.UserRequest;
+import io.github.zhc.dev.friend.service.user.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 

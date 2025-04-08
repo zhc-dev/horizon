@@ -1,4 +1,4 @@
-package io.github.zhc.dev.friend.mapper;
+package io.github.zhc.dev.friend.mapper.user;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.github.zhc.dev.friend.model.entity.User;

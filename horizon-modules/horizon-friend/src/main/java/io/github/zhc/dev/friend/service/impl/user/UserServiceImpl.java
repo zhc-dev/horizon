@@ -1,4 +1,4 @@
-package io.github.zhc.dev.friend.service.impl;
+package io.github.zhc.dev.friend.service.impl.user;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -11,10 +11,10 @@ import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserRole;
 import io.github.zhc.dev.common.core.model.enums.UserStatus;
-import io.github.zhc.dev.friend.mapper.UserMapper;
-import io.github.zhc.dev.friend.model.dto.UserRequest;
+import io.github.zhc.dev.friend.mapper.user.UserMapper;
+import io.github.zhc.dev.friend.model.dto.user.UserRequest;
 import io.github.zhc.dev.friend.model.entity.User;
-import io.github.zhc.dev.friend.service.UserService;
+import io.github.zhc.dev.friend.service.user.UserService;
 import io.github.zhc.dev.message.service.EmailService;
 import io.github.zhc.dev.redis.service.RedisService;
 import io.github.zhc.dev.security.exception.ServiceException;

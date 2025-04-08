@@ -1,4 +1,4 @@
-package io.github.zhc.dev.friend.model.dto;
+package io.github.zhc.dev.friend.model.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;

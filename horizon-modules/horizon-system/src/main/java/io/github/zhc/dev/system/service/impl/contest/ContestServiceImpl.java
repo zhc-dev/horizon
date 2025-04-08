@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.service.impl.comtest;
+package io.github.zhc.dev.system.service.impl.contest;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;

@@ -1,8 +1,8 @@
-package io.github.zhc.dev.friend.service;
+package io.github.zhc.dev.friend.service.user;
 
 import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
-import io.github.zhc.dev.friend.model.dto.UserRequest;
+import io.github.zhc.dev.friend.model.dto.user.UserRequest;
 
 /**
  * @author zhc.dev

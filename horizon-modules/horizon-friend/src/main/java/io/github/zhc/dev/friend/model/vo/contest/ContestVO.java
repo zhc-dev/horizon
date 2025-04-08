@@ -1,4 +1,4 @@
-package io.github.zhc.dev.system.model.vo.contest;
+package io.github.zhc.dev.friend.model.vo.contest;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author zhc.dev
- * @date 2025/4/4 22:38
+ * @date 2025/4/8 22:39
  */
 @Getter
 @Setter
@@ -18,8 +18,6 @@ public class ContestVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long contestId;
     private String title;
-    private Integer status;
-    private String createName;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startTime;
