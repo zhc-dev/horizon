@@ -6,8 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.zhc.dev.common.core.constants.CacheConstants;
 import io.github.zhc.dev.common.core.constants.Constants;
 import io.github.zhc.dev.common.core.constants.HttpConstants;
+import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
+import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
-import io.github.zhc.dev.common.core.model.enums.UserIdentity;
 import io.github.zhc.dev.common.core.model.enums.UserStatus;
 import io.github.zhc.dev.friend.mapper.UserMapper;
 import io.github.zhc.dev.friend.model.dto.UserRequest;
@@ -91,7 +92,7 @@ public class UserServiceImpl implements UserService {
             user.setCreateBy(Constants.SYSTEM_USER_ID);
             userMapper.insert(user);
         }
-        return tokenService.createToken(user.getUserId(), secret, UserIdentity.ORDINARY.getValue(), user.getNickName(), user.getHeadImage());
+        return tokenService.createToken(user.getUserId(), secret, user.getNickName(), user.getHeadImage());
     }
 
     @Override
@@ -100,6 +101,21 @@ public class UserServiceImpl implements UserService {
             token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
         }
         return tokenService.deleteLoginUser(token, secret);
+    }
+
+    @Override
+    public R<LoginUserVO> info(String token) {
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+
+        LoginUserVO loginUser = tokenService.getLoginUser(token, secret);
+        if (loginUser == null) return R.fail();
+
+        LoginUserVO loginUserVO = new LoginUserVO();
+        loginUserVO.setNickName(loginUser.getNickName());
+        loginUserVO.setHeadImage(loginUser.getHeadImage());
+        return R.ok(loginUserVO);
     }
 
 

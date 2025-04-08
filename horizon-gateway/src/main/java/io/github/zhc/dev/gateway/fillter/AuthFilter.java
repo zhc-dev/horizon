@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import io.github.zhc.dev.common.core.constants.CacheConstants;
 import io.github.zhc.dev.common.core.constants.HttpConstants;
-import io.github.zhc.dev.common.core.model.entity.LoginUser;
+import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserRole;
@@ -76,7 +76,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (StrUtil.isEmpty(userId)) return unauthorizedResponse(exchange, "令牌验证失败");
 
         // B端仅管理员访问
-        LoginUser user = redisService.getCacheObject(getTokenKey(userId), LoginUser.class);
+        LoginUserVO user = redisService.getCacheObject(getTokenKey(userId), LoginUserVO.class);
 
         if (url.contains(HttpConstants.SYSTEM_URL_PREFIX) && !UserRole.ADMIN.getValue().equals(user.getRole()))
             return unauthorizedResponse(exchange, "令牌验证失败");

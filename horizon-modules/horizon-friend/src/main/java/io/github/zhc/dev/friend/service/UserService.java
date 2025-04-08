@@ -1,5 +1,7 @@
 package io.github.zhc.dev.friend.service;
 
+import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
+import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.friend.model.dto.UserRequest;
 
 /**
@@ -12,4 +14,6 @@ public interface UserService {
     String codeLogin(String email, String code);
 
     boolean logout(String token);
+
+    R<LoginUserVO> info(String token);
 }

@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.zhc.dev.common.core.constants.HttpConstants;
-import io.github.zhc.dev.common.core.model.entity.LoginUser;
+import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserRole;
@@ -67,7 +67,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         SystemUserLoginVO systemUserLoginVO = new SystemUserLoginVO();
         BeanUtils.copyProperties(systemUser, systemUserLoginVO);
         // 将令牌返回到前端
-        systemUserLoginVO.setToken(tokenService.createToken(systemUser.getUserId(), secret, UserRole.ADMIN.getValue(), systemUser.getNickName(), null));
+        systemUserLoginVO.setToken(tokenService.createToken(systemUser.getUserId(), secret, systemUser.getNickName(), null));
 
         return R.ok(systemUserLoginVO);
     }
@@ -98,13 +98,12 @@ public class SystemUserServiceImpl implements SystemUserService {
             token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
         }
         // 查询redis，获取当前登录用户
-        LoginUser loginUser = tokenService.getLoginUser(token, secret);
-        if (loginUser == null) return R.fail();
+        LoginUserVO loginUserVO = tokenService.getLoginUser(token, secret);
+        if (loginUserVO == null) return R.fail();
 
         // 封装返回对象
         CurrentLoginUserVO currentLoginUserVO = new CurrentLoginUserVO();
-        currentLoginUserVO.setNickName(loginUser.getNickName());
-        currentLoginUserVO.setRole(loginUser.getRole());
+        currentLoginUserVO.setNickName(loginUserVO.getNickName());
 
         return R.ok(currentLoginUserVO);
     }

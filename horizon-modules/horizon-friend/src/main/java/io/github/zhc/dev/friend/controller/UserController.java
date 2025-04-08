@@ -2,6 +2,7 @@ package io.github.zhc.dev.friend.controller;
 
 import io.github.zhc.dev.common.core.constants.HttpConstants;
 import io.github.zhc.dev.common.core.controller.BaseController;
+import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.friend.model.dto.UserRequest;
 import io.github.zhc.dev.friend.service.UserService;
@@ -31,5 +32,10 @@ public class UserController extends BaseController {
     @DeleteMapping("/logout")
     public R<Void> logout(@RequestHeader(HttpConstants.AUTHENTICATION) String token) {
         return toR(userService.logout(token));
+    }
+
+    @GetMapping("/info")
+    public R<LoginUserVO> info(@RequestHeader(HttpConstants.AUTHENTICATION) String token) {
+        return userService.info(token);
     }
 }
