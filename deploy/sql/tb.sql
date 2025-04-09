@@ -177,6 +177,23 @@ CREATE TABLE `tb_contest`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT ='竞赛信息表';
 
+-- --------------------------------
+-- Table structure for tb_user_exam
+-- --------------------------------
+
+CREATE TABLE `tb_user_contest`
+(
+    user_contest_id BIGINT UNSIGNED NOT NULL COMMENT '用户竞赛关系id',
+    user_id      BIGINT UNSIGNED NOT NULL COMMENT '用户id',
+    contest_id      BIGINT UNSIGNED NOT NULL COMMENT '竞赛id',
+    score        INT UNSIGNED COMMENT '得分',
+    contest_rank    INT UNSIGNED COMMENT '排名',
+    create_by    BIGINT UNSIGNED NOT NULL COMMENT '创建人',
+    create_time  DATETIME        NOT NULL COMMENT '创建时间',
+    update_by    BIGINT UNSIGNED COMMENT '更新人',
+    update_time  DATETIME COMMENT '更新时间',
+    PRIMARY KEY (user_contest_id)
+);
 
 -- ----------------------------------------
 -- Table structure for tb_contest_question

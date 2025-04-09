@@ -1,7 +1,7 @@
 package io.github.zhc.dev.friend.mapper.user;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.github.zhc.dev.friend.model.entity.User;
+import io.github.zhc.dev.friend.model.entity.user.User;
 
 /**
  * @author zhc.dev

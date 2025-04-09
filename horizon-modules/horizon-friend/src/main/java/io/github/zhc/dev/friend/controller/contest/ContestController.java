@@ -29,4 +29,17 @@ public class ContestController extends BaseController {
     public TableData list(ContestQueryRequest contestQueryRequest) {
         return getTableData(contestService.list(contestQueryRequest));
     }
+
+    /**
+     * 查询竞赛列表
+     *
+     * @param contestQueryRequest 查询请求
+     * @return 竞赛列表
+     */
+    @GetMapping("/semi/login/cache/list")
+    public TableData listByCache(ContestQueryRequest contestQueryRequest) {
+        return getTableData(contestService.listByCache(contestQueryRequest));
+    }
+
+
 }

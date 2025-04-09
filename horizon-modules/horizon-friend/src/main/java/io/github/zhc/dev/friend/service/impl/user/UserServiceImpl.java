@@ -13,7 +13,7 @@ import io.github.zhc.dev.common.core.model.enums.UserRole;
 import io.github.zhc.dev.common.core.model.enums.UserStatus;
 import io.github.zhc.dev.friend.mapper.user.UserMapper;
 import io.github.zhc.dev.friend.model.dto.user.UserRequest;
-import io.github.zhc.dev.friend.model.entity.User;
+import io.github.zhc.dev.friend.model.entity.user.User;
 import io.github.zhc.dev.friend.service.user.UserService;
 import io.github.zhc.dev.message.service.EmailService;
 import io.github.zhc.dev.redis.service.RedisService;
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
      * @return 缓存key
      */
     private String getEmailCodeKey(String email) {
-        return CacheConstants.EMAIL_CODE_KEY + email;
+        return CacheConstants.EMAIL_CODE_KEY_PREFIX + email;
     }
 
     /**
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
      * @return 缓存key
      */
     private String getEmailCodeTimesKey(String email) {
-        return CacheConstants.EMAIL_CODE_TIMES_KEY + email;
+        return CacheConstants.EMAIL_CODE_TIMES_REDIS_KEY_PREFIX + email;
     }
 
     /**

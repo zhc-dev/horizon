@@ -1,4 +1,4 @@
-package io.github.zhc.dev.friend.model.entity;
+package io.github.zhc.dev.friend.model.entity.user;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

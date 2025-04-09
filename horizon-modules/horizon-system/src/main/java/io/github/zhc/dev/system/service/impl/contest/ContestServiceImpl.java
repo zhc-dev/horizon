@@ -133,17 +133,13 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public int publish(Long contestId) {
         Contest contest = getContest(contestId);
-        if (contest.getEndTime().isBefore(LocalDateTime.now())) {
-            throw new ServiceException(ResultCode.CONTEST_IS_FINISH);
-        }
-        Long count = contestQuestionMapper
-                .selectCount(new LambdaQueryWrapper<ContestQuestion>().eq(ContestQuestion::getContestId, contestId));
-        if (count == null || count <= 0) {
-            throw new ServiceException(ResultCode.CONTEST_NOT_HAS_QUESTION);
-        }
-        contest.setStatus(Constants.TRUE);
+        if (contest.getEndTime().isBefore(LocalDateTime.now())) throw new ServiceException(ResultCode.CONTEST_IS_FINISH);
 
-        //要将新发布的竞赛数据存储到redis   e:t:l  e:d:contestId
+        Long count = contestQuestionMapper.selectCount(new LambdaQueryWrapper<ContestQuestion>().eq(ContestQuestion::getContestId, contestId));
+
+        if (count == null || count <= 0) throw new ServiceException(ResultCode.CONTEST_NOT_HAS_QUESTION);
+
+        contest.setStatus(Constants.TRUE);
         contestCacheManager.addCache(contest);
         return contestMapper.updateById(contest);
     }

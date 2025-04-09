@@ -32,7 +32,7 @@ public class ContestCacheManager {
     }
 
     private String getDetailKey(Long contestId) {
-        return CacheConstants.CONTEST_DETAIL + contestId;
+        return CacheConstants.CONTEST_DETAIL_PREFIX + contestId;
     }
 
     private String getExamQuestionListKey(Long contestId) {

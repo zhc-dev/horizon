@@ -13,14 +13,15 @@ public interface CacheConstants {
 
     long REFRESH_TIME = 3;
 
-    String EMAIL_CODE_KEY = "email:code:"; // 邮箱验证码
-    String EMAIL_CODE_TIMES_KEY = "email:code:times:"; // 邮箱验证码发送次数
+    String EMAIL_CODE_KEY_PREFIX = "email:code:"; // 邮箱验证码
+
+    String EMAIL_CODE_TIMES_REDIS_KEY_PREFIX = "email:code:times:"; // 邮箱验证码发送次数
 
     String CONTEST_UNFINISHED_LIST = "contest:unfinished:list"; // 未完赛竞赛列表
 
     String EXAM_HISTORY_LIST = "contest:history:list";  // 历史竞赛列表
 
-    String CONTEST_DETAIL = "contest:detail:";    //竞赛详情信息
+    String CONTEST_DETAIL_PREFIX = "contest:detail:";    //竞赛详情信息
 
     String USER_EXAM_LIST = "user:contest:list:";   //用户竞赛列表
 

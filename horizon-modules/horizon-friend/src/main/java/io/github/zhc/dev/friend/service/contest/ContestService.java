@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface ContestService {
     List<ContestVO> list(ContestQueryRequest contestQueryRequest);
+
+    List<?> listByCache(ContestQueryRequest contestQueryRequest);
 }
