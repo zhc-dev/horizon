@@ -23,7 +23,7 @@ public interface CacheConstants {
 
     String CONTEST_DETAIL_PREFIX = "contest:detail:";    //竞赛详情信息
 
-    String USER_EXAM_LIST = "user:contest:list:";   //用户竞赛列表
+    String USER_CONTEST_LIST = "user:contest:list:";   //用户竞赛列表
 
     public final static String USER_DETAIL = "user:detail:";   //用户详情信息
 
