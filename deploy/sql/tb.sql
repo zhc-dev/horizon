@@ -250,4 +250,93 @@ CREATE TABLE `tb_user`
     update_by   BIGINT UNSIGNED COMMENT '更新人',
     update_time DATETIME COMMENT '更新时间',
     PRIMARY KEY (`user_id`)
-)
+);
+
+
+-- ------------------------------
+-- Table structure for tb_user_submit
+-- ------------------------------
+
+DROP TABLE IF EXISTS `tb_user_submit`;
+CREATE TABLE `tb_user_submit`
+(
+    `submit_id`    BIGINT UNSIGNED NOT NULL COMMENT '提交记录id (主键)',
+    `user_id`      BIGINT UNSIGNED NOT NULL COMMENT '用户id',
+    `question_id`  BIGINT UNSIGNED NOT NULL COMMENT '题目id',
+    `contest_id`   BIGINT UNSIGNED          DEFAULT NULL COMMENT '竞赛id',
+    `program_type` TINYINT         NOT NULL COMMENT '代码类型 0:Java 1:CPP',
+    `user_code`    TEXT            NOT NULL COMMENT '用户代码',
+    `pass`         TINYINT         NOT NULL COMMENT '0:未通过 1:通过',
+    `exe_message`  VARCHAR(500)    NOT NULL COMMENT '执行结果',
+    `score`        INT             NOT NULL DEFAULT '0' COMMENT '得分',
+    `create_by`    BIGINT UNSIGNED NOT NULL COMMENT '创建者ID',
+    `create_time`  DATETIME        NOT NULL COMMENT '创建时间',
+    `update_by`    BIGINT UNSIGNED          DEFAULT NULL COMMENT '最后更新者ID',
+    `update_time`  DATETIME                 DEFAULT NULL COMMENT '最后更新时间',
+    PRIMARY KEY (`submit_id`),
+    KEY `idx_us_user_id` (`user_id`),
+    KEY `idx_us_question_id` (`question_id`),
+    KEY `idx_us_contest_id` (`contest_id`),
+    KEY `idx_us_create_by` (`create_by`),
+    KEY `idx_us_update_by` (`update_by`),
+    CONSTRAINT `fk_us_user` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_us_question` FOREIGN KEY (`question_id`) REFERENCES `tb_question` (`question_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_us_contest` FOREIGN KEY (`contest_id`) REFERENCES `tb_contest` (`contest_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT `fk_us_create_by` FOREIGN KEY (`create_by`) REFERENCES `tb_system_user` (`user_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_us_update_by` FOREIGN KEY (`update_by`) REFERENCES `tb_system_user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='用户提交记录表';
+
+-- ------------------------------
+-- Table structure for tb_message_text
+-- ------------------------------
+
+DROP TABLE IF EXISTS `tb_message_text`;
+CREATE TABLE `tb_message_text`
+(
+    `text_id`         BIGINT UNSIGNED NOT NULL COMMENT '消息内容id (主键)',
+    `message_title`   VARCHAR(10)     NOT NULL COMMENT '消息标题',
+    `message_content` VARCHAR(200)    NOT NULL COMMENT '消息内容',
+    `create_by`       BIGINT UNSIGNED NOT NULL COMMENT '创建者ID',
+    `create_time`     DATETIME        NOT NULL COMMENT '创建时间',
+    `update_by`       BIGINT UNSIGNED          DEFAULT NULL COMMENT '最后更新者ID',
+    `update_time`     DATETIME                 DEFAULT NULL COMMENT '最后更新时间',
+    PRIMARY KEY (`text_id`),
+    KEY `idx_mt_create_by` (`create_by`),
+    KEY `idx_mt_update_by` (`update_by`),
+    CONSTRAINT `fk_mt_create_by` FOREIGN KEY (`create_by`) REFERENCES `tb_system_user` (`user_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_mt_update_by` FOREIGN KEY (`update_by`) REFERENCES `tb_system_user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='消息内容表';
+
+-- ------------------------------
+-- Table structure for tb_message
+-- ------------------------------
+
+DROP TABLE IF EXISTS `tb_message`;
+CREATE TABLE `tb_message`
+(
+    `message_id`  BIGINT UNSIGNED NOT NULL COMMENT '消息id (主键)',
+    `text_id`     BIGINT UNSIGNED NOT NULL COMMENT '消息内容id',
+    `send_id`     BIGINT UNSIGNED NOT NULL COMMENT '消息发送人id',
+    `rec_id`      BIGINT UNSIGNED NOT NULL COMMENT '消息接收人id',
+    `create_by`   BIGINT UNSIGNED NOT NULL COMMENT '创建者ID',
+    `create_time` DATETIME        NOT NULL COMMENT '创建时间',
+    `update_by`   BIGINT UNSIGNED          DEFAULT NULL COMMENT '最后更新者ID',
+    `update_time` DATETIME                 DEFAULT NULL COMMENT '最后更新时间',
+    PRIMARY KEY (`message_id`),
+    KEY `idx_m_text_id` (`text_id`),
+    KEY `idx_m_send_id` (`send_id`),
+    KEY `idx_m_rec_id` (`rec_id`),
+    KEY `idx_m_create_by` (`create_by`),
+    KEY `idx_m_update_by` (`update_by`),
+    CONSTRAINT `fk_m_text` FOREIGN KEY (`text_id`) REFERENCES `tb_message_text` (`text_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_m_send` FOREIGN KEY (`send_id`) REFERENCES `tb_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_m_rec` FOREIGN KEY (`rec_id`) REFERENCES `tb_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_m_create_by` FOREIGN KEY (`create_by`) REFERENCES `tb_system_user` (`user_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_m_update_by` FOREIGN KEY (`update_by`) REFERENCES `tb_system_user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='消息表';
