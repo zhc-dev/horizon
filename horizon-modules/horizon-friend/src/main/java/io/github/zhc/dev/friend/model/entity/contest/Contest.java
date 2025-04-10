@@ -2,6 +2,7 @@ package io.github.zhc.dev.friend.model.entity.contest;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.zhc.dev.common.core.model.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@TableName("tb_contest")
 public class Contest extends BaseEntity {
     @TableId(value = "CONTEST_ID", type = IdType.ASSIGN_ID)
     private Long contestId;
