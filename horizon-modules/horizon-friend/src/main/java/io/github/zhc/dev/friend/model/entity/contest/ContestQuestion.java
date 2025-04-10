@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @TableName("tb_contest_question")
 public class ContestQuestion {
-    @TableId(value = "EXAM_QUESTION_ID", type = IdType.ASSIGN_ID)
+    @TableId(value = "CONTEST_QUESTION_ID", type = IdType.ASSIGN_ID)
     private Long contestQuestionId;
 
     private Long contestId;

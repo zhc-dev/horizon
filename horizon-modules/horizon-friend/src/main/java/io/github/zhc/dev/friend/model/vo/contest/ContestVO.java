@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class ContestVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long contestId;
+
     private String title;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -24,4 +25,6 @@ public class ContestVO {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endTime;
+
+    private boolean enter = false; //true: 已经报名  false 未报名
 }

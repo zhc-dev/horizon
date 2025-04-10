@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Contest extends BaseEntity {
-    @TableId(value = "EXAM_ID", type = IdType.ASSIGN_ID)
+    @TableId(value = "CONTEST_ID", type = IdType.ASSIGN_ID)
     private Long contestId;
 
     private String title;

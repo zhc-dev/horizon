@@ -14,5 +14,5 @@ import java.util.List;
 public interface UserContestMapper extends BaseMapper<UserContest> {
     List<ContestVO> selectUserContestList(Long userId);
 
-    List<ContestRankVO> selectContestRankList(Long examId);
+    List<ContestRankVO> selectContestRankList(Long contestId);
 }

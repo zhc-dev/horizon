@@ -1,5 +1,6 @@
 package io.github.zhc.dev.friend.service.contest;
 
+import io.github.zhc.dev.common.core.model.entity.TableData;
 import io.github.zhc.dev.friend.model.dto.contest.ContestQueryRequest;
 import io.github.zhc.dev.friend.model.vo.contest.ContestVO;
 
@@ -12,5 +13,5 @@ import java.util.List;
 public interface ContestService {
     List<ContestVO> list(ContestQueryRequest contestQueryRequest);
 
-    List<?> listByCache(ContestQueryRequest contestQueryRequest);
+    TableData listByCache(ContestQueryRequest contestQueryRequest);
 }

@@ -38,7 +38,7 @@ public class ContestController extends BaseController {
      */
     @GetMapping("/semi/login/cache/list")
     public TableData listByCache(ContestQueryRequest contestQueryRequest) {
-        return getTableData(contestService.listByCache(contestQueryRequest));
+        return contestService.listByCache(contestQueryRequest);
     }
 
 

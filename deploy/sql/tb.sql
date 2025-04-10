@@ -178,7 +178,7 @@ CREATE TABLE `tb_contest`
   COLLATE = utf8mb4_unicode_ci COMMENT ='竞赛信息表';
 
 -- --------------------------------
--- Table structure for tb_user_exam
+-- Table structure for tb_user_contest
 -- --------------------------------
 
 CREATE TABLE `tb_user_contest`

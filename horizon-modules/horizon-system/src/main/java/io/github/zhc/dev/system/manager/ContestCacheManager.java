@@ -24,7 +24,7 @@ public class ContestCacheManager {
     public void deleteCache(Long contestId) {
         redisService.removeForList(getContestListKey(), contestId);
         redisService.deleteObject(getDetailKey(contestId));
-        redisService.deleteObject(getExamQuestionListKey(contestId));
+        redisService.deleteObject(getContestQuestionListKey(contestId));
     }
 
     private String getContestListKey() {
@@ -35,7 +35,7 @@ public class ContestCacheManager {
         return CacheConstants.CONTEST_DETAIL_KEY_PREFIX + contestId;
     }
 
-    private String getExamQuestionListKey(Long contestId) {
+    private String getContestQuestionListKey(Long contestId) {
         return CacheConstants.CONTEST_QUESTION_LIST_KEY_PREFIX + contestId;
     }
 }

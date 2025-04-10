@@ -1,6 +1,11 @@
 package io.github.zhc.dev.friend.service.impl.contest;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import io.github.zhc.dev.common.core.constants.Constants;
+import io.github.zhc.dev.common.core.model.entity.TableData;
+import io.github.zhc.dev.common.core.utils.ThreadLocalUtil;
 import io.github.zhc.dev.friend.manager.ContestCacheManager;
 import io.github.zhc.dev.friend.mapper.contest.ContestMapper;
 import io.github.zhc.dev.friend.model.dto.contest.ContestQueryRequest;
@@ -30,8 +35,35 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
-    public List<?> listByCache(ContestQueryRequest contestQueryRequest) {
+    public TableData listByCache(ContestQueryRequest contestQueryRequest) {
         //从redis当中获取  竞赛列表的数据
-        return null;
+        Long total = contestCacheManager.getListSize(contestQueryRequest.getType(), null);
+        List<ContestVO> contestVOList;
+        if (total == null || total <= 0) {
+            contestVOList = list(contestQueryRequest);
+            contestCacheManager.refreshCache(contestQueryRequest.getType(), null);
+            total = new PageInfo<>(contestVOList).getTotal();
+        } else {
+            contestVOList = contestCacheManager.getContestVOList(contestQueryRequest, null);
+            total = contestCacheManager.getListSize(contestQueryRequest.getType(), null);
+        }
+        if (CollectionUtil.isEmpty(contestVOList)) {
+            return TableData.empty();
+        }
+        assembleContestVOList(contestVOList);
+        return TableData.success(contestVOList, total);
+    }
+
+    private void assembleContestVOList(List<ContestVO> contestVOList) {
+        Long userId = ThreadLocalUtil.get(Constants.USER_ID, Long.class);
+        List<Long> userContestList = contestCacheManager.getAllUserContestList(userId);
+        if (CollectionUtil.isEmpty(userContestList)) {
+            return;
+        }
+        for (ContestVO contestVO : contestVOList) {
+            if (userContestList.contains(contestVO.getContestId())) {
+                contestVO.setEnter(true);
+            }
+        }
     }
 }
