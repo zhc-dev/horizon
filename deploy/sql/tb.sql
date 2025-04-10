@@ -230,7 +230,7 @@ CREATE TABLE `tb_contest_question`
 -- ----------------------------------------
 -- Table structure for tb_user
 -- ----------------------------------------
-
+DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user`
 (
     user_id     BIGINT UNSIGNED NOT NULL COMMENT '用户id（主键）',
