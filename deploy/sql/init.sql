@@ -3,9 +3,11 @@ CREATE DATABASE IF NOT EXISTS `horizon_dev`;
 # 创建horizon用户
 CREATE USER `horizon`@`%` IDENTIFIED BY 'horizon';
 # 赋予用户操作 `horizon_dev` 数据库的权限
-GRANT ALTER,CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_dev.* TO `horizon`@`%`;
+GRANT ALTER, CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_dev.* TO `horizon`@`%`;
 # 赋予用户操作 `horizon_nacos_dev` 数据库的权限
-GRANT ALTER,CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_nacos_dev.* TO `horizon`@`%`;
+GRANT ALTER, CREATE, DROP, SELECT, INSERT, UPDATE, DELETE ON horizon_nacos_dev.* TO `horizon`@`%`;
+# 赋予用户操作 `xxl-job` 数据库的权限
+GRANT ALL PRIVILEGES ON xxl_job.* TO 'horizon'@'%';
 # 选中数据库
 USE horizon_dev;
 
@@ -22,6 +24,10 @@ CREATE TABLE `tb_test`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-INSERT INTO tb_test VALUES (1, 'test', 'test');
-SELECT * FROM tb_test;
-UPDATE tb_test SET title = 'test_update' WHERE test_id = 1;
+INSERT INTO tb_test
+VALUES (1, 'test', 'test');
+SELECT *
+FROM tb_test;
+UPDATE tb_test
+SET title = 'test_update'
+WHERE test_id = 1;
