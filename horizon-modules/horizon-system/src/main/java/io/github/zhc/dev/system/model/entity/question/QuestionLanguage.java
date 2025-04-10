@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("tb_question_language")
-public class QuestionLanguage extends BaseEntity {
+public class QuestionLanguage extends BaseEntity<BaseEntity> {
     @TableId(type = IdType.ASSIGN_ID)
     private Long questionLanguageId;
     private Long questionId;
