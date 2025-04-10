@@ -7,41 +7,38 @@ package io.github.zhc.dev.common.core.constants;
  * @date 2025/3/27 22:23
  */
 public interface CacheConstants {
-    String JWT_PAYLOAD_REDIS_KEY_PREFIX = "auth:jwt:payload:user_id:";
+    // JWT相关常量
+    String JWT_PAYLOAD_KEY_PREFIX = "auth:jwt:payload:user_id:";
     Long JWT_TOKEN_DEFAULT_EXPIRATION_MINUTES = 720L;
     Long JWT_TOKEN_REFRESH_THRESHOLD_MINUTES = 180L;
+    long JWT_REFRESH_TIME = 3;
 
-    long REFRESH_TIME = 3;
+    // 邮箱验证码相关常量
+    String EMAIL_CODE_KEY_PREFIX = "email:code:";
+    String EMAIL_CODE_TIMES_KEY_PREFIX = "email:code:times:";
 
-    String EMAIL_CODE_KEY_PREFIX = "email:code:"; // 邮箱验证码
+    // 竞赛相关常量
+    String CONTEST_UNFINISHED_LIST_KEY = "contest:unfinished:list";
+    String CONTEST_HISTORY_LIST_KEY = "contest:history:list";
+    String CONTEST_DETAIL_KEY_PREFIX = "contest:detail:";
+    String CONTEST_QUESTION_LIST_KEY_PREFIX = "contest:question:list:";
+    String CONTEST_RANK_LIST_KEY_PREFIX = "contest:rank:list:";
 
-    String EMAIL_CODE_TIMES_REDIS_KEY_PREFIX = "email:code:times:"; // 邮箱验证码发送次数
+    // 用户相关常量
+    String USER_CONTEST_LIST_KEY_PREFIX = "user:contest:list:";
+    String USER_DETAIL_KEY_PREFIX = "user:detail:";
+    long USER_EXPIRATION_TIME = 10;
+    String USER_UPLOAD_TIMES_KEY = "user:upload:times:";
 
-    String CONTEST_UNFINISHED_LIST = "contest:unfinished:list"; // 未完赛竞赛列表
+    // 题目相关常量
+    String QUESTION_LIST_KEY = "question:list:";
+    String QUESTION_HOST_LIST_KEY = "question:host:list:";
 
-    String EXAM_HISTORY_LIST = "contest:history:list";  // 历史竞赛列表
+    // 消息相关常量
+    String USER_MESSAGE_LIST_KEY_PREFIX = "user:message:list:";
+    String MESSAGE_DETAIL_KEY_PREFIX = "message:detail:";
 
-    String CONTEST_DETAIL_PREFIX = "contest:detail:";    //竞赛详情信息
-
-    String USER_CONTEST_LIST = "user:contest:list:";   //用户竞赛列表
-
-    public final static String USER_DETAIL = "user:detail:";   //用户详情信息
-
-    long USER_EXP = 10;
-    String USER_UPLOAD_TIMES_KEY = "u:u:t";
-
-    String QUESTION_LIST = "q:l";
-
-    String QUESTION_HOST_LIST = "q:h:l";
-
-    String CONTEST_QUESTION_LIST = "contest:question:list:";
-
-    String USER_MESSAGE_LIST = "u:m:l:";
-
-    String MESSAGE_DETAIL = "m:d:";
-
-    String EXAM_RANK_LIST = "e:r:l:";
-
+    // 分页相关常量
     long DEFAULT_START = 0;
     long DEFAULT_END = -1;
 }
