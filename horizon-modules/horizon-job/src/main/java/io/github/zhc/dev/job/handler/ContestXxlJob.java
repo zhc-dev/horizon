@@ -56,10 +56,10 @@ public class ContestXxlJob {
     private UserContestMapper userContestMapper;
 
 
-    @XxlJob("examListOrganizeHandler")
-    public void examListOrganizeHandler() {
+    @XxlJob("contestListOrganizeHandler")
+    public void contestListOrganizeHandler() {
         //  统计哪些竞赛应该存入未完赛的列表中  哪些竞赛应该存入历史竞赛列表中   统计出来了之后，再存入对应的缓存中
-        log.info("*** examListOrganizeHandler ***");
+        log.info("*** contestListOrganizeHandler ***");
         List<Contest> unFinishList = contestMapper.selectList(new LambdaQueryWrapper<Contest>()
                 .select(Contest::getContestId, Contest::getTitle, Contest::getStartTime, Contest::getEndTime)
                 .gt(Contest::getEndTime, LocalDateTime.now())
@@ -74,39 +74,39 @@ public class ContestXxlJob {
                 .orderByDesc(Contest::getCreateTime));
 
         refreshCache(historyList, CacheConstants.CONTEST_HISTORY_LIST_KEY);
-        log.info("*** examListOrganizeHandler 统计结束 ***");
+        log.info("*** contestListOrganizeHandler 统计结束 ***");
     }
 
-    @XxlJob("examResultHandler")
+    @XxlJob("contestResultHandler")
     //
-    public void examResultHandler() {
+    public void contestResultHandler() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime minusDateTime = now.minusDays(1);
-        List<Contest> examList = contestMapper.selectList(new LambdaQueryWrapper<Contest>()
+        List<Contest> contestList = contestMapper.selectList(new LambdaQueryWrapper<Contest>()
                 .select(Contest::getContestId, Contest::getTitle)
                 .eq(Contest::getStatus, Constants.TRUE)
                 .ge(Contest::getEndTime, minusDateTime)
                 .le(Contest::getEndTime, now));
-        if (CollectionUtil.isEmpty(examList)) return;
-        Set<Long> examIdSet = examList.stream().map(Contest::getContestId).collect(Collectors.toSet());
-        List<UserScore> userScoreList = userSubmitMapper.selectUserScoreList(examIdSet);
+        if (CollectionUtil.isEmpty(contestList)) return;
+        Set<Long> contestIdSet = contestList.stream().map(Contest::getContestId).collect(Collectors.toSet());
+        List<UserScore> userScoreList = userSubmitMapper.selectUserScoreList(contestIdSet);
         Map<Long, List<UserScore>> userScoreMap = userScoreList.stream().collect(Collectors.groupingBy(UserScore::getContestId));
-        createMessage(examList, userScoreMap);
+        createMessage(contestList, userScoreMap);
     }
 
-    private void createMessage(List<Contest> examList, Map<Long, List<UserScore>> userScoreMap) {
+    private void createMessage(List<Contest> contestList, Map<Long, List<UserScore>> userScoreMap) {
         List<MessageText> messageTextList = new ArrayList<>();
         List<Message> messageList = new ArrayList<>();
-        for (Contest exam : examList) {
-            Long examId = exam.getContestId();
-            List<UserScore> userScoreList = userScoreMap.get(examId);
+        for (Contest contest : contestList) {
+            Long contestId = contest.getContestId();
+            List<UserScore> userScoreList = userScoreMap.get(contestId);
             int totalUser = userScoreList.size();
-            int examRank = 1;
+            int contestRank = 1;
             for (UserScore userScore : userScoreList) {
-                String msgTitle = exam.getTitle() + "——排名情况";
-                String msgContent = "您所参与的竞赛：" + exam.getTitle()
-                        + "，本次参与竞赛一共" + totalUser + "人， 您排名第" + examRank + "名！";
-                userScore.setContestRank(examRank);
+                String msgTitle = contest.getTitle() + "——排名情况";
+                String msgContent = "您所参与的竞赛：" + contest.getTitle()
+                        + "，本次参与竞赛一共" + totalUser + "人， 您排名第" + contestRank + "名！";
+                userScore.setContestRank(contestRank);
                 MessageText messageText = new MessageText();
                 messageText.setMessageTitle(msgTitle);
                 messageText.setMessageContent(msgContent);
@@ -117,10 +117,10 @@ public class ContestXxlJob {
                 message.setCreateBy(Constants.SYSTEM_USER_ID);
                 message.setRecId(userScore.getUserId());
                 messageList.add(message);
-                examRank++;
+                contestRank++;
             }
             userContestMapper.updateUserScoreAndRank(userScoreList);
-            redisService.rightPushAll(getContestRankListKey(examId), userScoreList);
+            redisService.rightPushAll(getContestRankListKey(contestId), userScoreList);
         }
         messageTextService.batchInsert(messageTextList);
         Map<String, MessageTextVO> messageTextVOMap = new HashMap<>();
@@ -148,24 +148,24 @@ public class ContestXxlJob {
     }
 
 
-    public void refreshCache(List<Contest> examList, String examListKey) {
-        if (CollectionUtil.isEmpty(examList)) {
+    public void refreshCache(List<Contest> contestList, String contestListKey) {
+        if (CollectionUtil.isEmpty(contestList)) {
             return;
         }
 
-        Map<String, Contest> examMap = new HashMap<>();
-        List<Long> examIdList = new ArrayList<>();
-        for (Contest exam : examList) {
-            examMap.put(getDetailKey(exam.getContestId()), exam);
-            examIdList.add(exam.getContestId());
+        Map<String, Contest> contestMap = new HashMap<>();
+        List<Long> contestIdList = new ArrayList<>();
+        for (Contest contest : contestList) {
+            contestMap.put(getDetailKey(contest.getContestId()), contest);
+            contestIdList.add(contest.getContestId());
         }
-        redisService.multiSet(examMap);  //刷新详情缓存
-        redisService.deleteObject(examListKey);
-        redisService.rightPushAll(examListKey, examIdList);      //刷新列表缓存
+        redisService.multiSet(contestMap);  //刷新详情缓存
+        redisService.deleteObject(contestListKey);
+        redisService.rightPushAll(contestListKey, contestIdList);      //刷新列表缓存
     }
 
-    private String getDetailKey(Long examId) {
-        return CacheConstants.CONTEST_DETAIL_KEY_PREFIX + examId;
+    private String getDetailKey(Long contestId) {
+        return CacheConstants.CONTEST_DETAIL_KEY_PREFIX + contestId;
     }
 
     private String getUserMsgListKey(Long userId) {
@@ -176,7 +176,7 @@ public class ContestXxlJob {
         return CacheConstants.MESSAGE_DETAIL_KEY_PREFIX + textId;
     }
 
-    private String getContestRankListKey(Long examId) {
-        return CacheConstants.CONTEST_RANK_LIST_KEY_PREFIX + examId;
+    private String getContestRankListKey(Long contestId) {
+        return CacheConstants.CONTEST_RANK_LIST_KEY_PREFIX + contestId;
     }
 }

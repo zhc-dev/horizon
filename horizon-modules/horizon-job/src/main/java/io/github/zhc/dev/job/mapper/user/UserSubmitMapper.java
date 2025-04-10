@@ -12,7 +12,7 @@ import java.util.Set;
  * @data 2025/4/10 22:57
  */
 public interface UserSubmitMapper extends BaseMapper<UserSubmit> {
-    List<UserScore> selectUserScoreList(Set<Long> examIdSet);
+    List<UserScore> selectUserScoreList(Set<Long> contestIdSet);
 
     List<Long> selectHostQuestionList();
 }
