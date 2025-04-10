@@ -34,5 +34,11 @@
             <artifactId>horizon-common-email</artifactId>
             <version>${horizon-common-email.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-core</artifactId>
+            <version>${horizon-common-core.version}</version>
+        </dependency>
     </dependencies>
 </project>
