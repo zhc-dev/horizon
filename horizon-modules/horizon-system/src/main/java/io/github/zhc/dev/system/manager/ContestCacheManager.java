@@ -28,14 +28,14 @@ public class ContestCacheManager {
     }
 
     private String getContestListKey() {
-        return CacheConstants.CONTEST_UNFINISHED_LIST;
+        return CacheConstants.CONTEST_UNFINISHED_LIST_KEY;
     }
 
     private String getDetailKey(Long contestId) {
-        return CacheConstants.CONTEST_DETAIL_PREFIX + contestId;
+        return CacheConstants.CONTEST_DETAIL_KEY_PREFIX + contestId;
     }
 
     private String getExamQuestionListKey(Long contestId) {
-        return CacheConstants.CONTEST_QUESTION_LIST + contestId;
+        return CacheConstants.CONTEST_QUESTION_LIST_KEY_PREFIX + contestId;
     }
 }

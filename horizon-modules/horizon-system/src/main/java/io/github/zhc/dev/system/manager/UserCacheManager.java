@@ -27,11 +27,11 @@ public class UserCacheManager {
         user.setStatus(status);
         redisService.setCacheObject(userKey, user);
         //设置用户缓存有效期为10分钟
-        redisService.expire(userKey, CacheConstants.USER_EXP, TimeUnit.MINUTES);
+        redisService.expire(userKey, CacheConstants.USER_EXPIRATION_TIME, TimeUnit.MINUTES);
     }
 
     //u:d:用户id
     private String getUserKey(Long userId) {
-        return CacheConstants.USER_DETAIL + userId;
+        return CacheConstants.USER_DETAIL_KEY_PREFIX + userId;
     }
 }

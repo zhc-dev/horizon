@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
      * @return 缓存key
      */
     private String getEmailCodeTimesKey(String email) {
-        return CacheConstants.EMAIL_CODE_TIMES_REDIS_KEY_PREFIX + email;
+        return CacheConstants.EMAIL_CODE_TIMES_KEY_PREFIX + email;
     }
 
     /**

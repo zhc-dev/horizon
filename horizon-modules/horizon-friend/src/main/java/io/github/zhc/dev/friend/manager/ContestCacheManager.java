@@ -87,7 +87,7 @@ public class ContestCacheManager {
     }
 
     public List<Long> getAllUserContestList(Long userId) {
-        String examListKey = CacheConstants.USER_CONTEST_LIST + userId;
+        String examListKey = CacheConstants.USER_CONTEST_LIST_KEY_PREFIX + userId;
         List<Long> userExamIdList = redisService.getCacheListByRange(examListKey, 0, -1, Long.class);
         if (CollectionUtil.isNotEmpty(userExamIdList)) {
             return userExamIdList;
@@ -219,27 +219,27 @@ public class ContestCacheManager {
 
     private String getExamListKey(Integer examListType, Long userId) {
         if (ContestListType.CONTEST_UNFINISHED_LIST.getValue().equals(examListType)) {
-            return CacheConstants.CONTEST_UNFINISHED_LIST;
+            return CacheConstants.CONTEST_UNFINISHED_LIST_KEY;
         } else if (ContestListType.CONTEST_HISTORY_LIST.getValue().equals(examListType)) {
-            return CacheConstants.EXAM_HISTORY_LIST;
+            return CacheConstants.CONTEST_HISTORY_LIST_KEY;
         } else {
-            return CacheConstants.USER_CONTEST_LIST + userId;
+            return CacheConstants.USER_CONTEST_LIST_KEY_PREFIX + userId;
         }
     }
 
     private String getDetailKey(Long examId) {
-        return CacheConstants.CONTEST_DETAIL_PREFIX + examId;
+        return CacheConstants.USER_DETAIL_KEY_PREFIX + examId;
     }
 
     private String getUserContestListKey(Long userId) {
-        return CacheConstants.USER_CONTEST_LIST + userId;
+        return CacheConstants.USER_CONTEST_LIST_KEY_PREFIX + userId;
     }
 
     private String getContestQuestionList(Long examId) {
-        return CacheConstants.CONTEST_QUESTION_LIST + examId;
+        return CacheConstants.CONTEST_QUESTION_LIST_KEY_PREFIX + examId;
     }
 
     private String getExamRankListKey(Long examId) {
-        return CacheConstants.EXAM_RANK_LIST + examId;
+        return CacheConstants.CONTEST_RANK_LIST_KEY_PREFIX + examId;
     }
 }

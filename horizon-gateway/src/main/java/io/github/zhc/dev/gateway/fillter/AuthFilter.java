@@ -128,7 +128,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
      * 获取缓存key
      */
     private String getTokenKey(String token) {
-        return CacheConstants.JWT_PAYLOAD_REDIS_KEY_PREFIX + token;
+        return CacheConstants.JWT_PAYLOAD_KEY_PREFIX + token;
     }
 
     /**

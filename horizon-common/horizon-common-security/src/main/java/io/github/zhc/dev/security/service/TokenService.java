@@ -33,7 +33,7 @@ public class TokenService {
         // 生成token
         String token = JwtUtils.createToken(claims, secret);
         // redis key
-        String key = CacheConstants.JWT_PAYLOAD_REDIS_KEY_PREFIX + userId;
+        String key = CacheConstants.JWT_PAYLOAD_KEY_PREFIX + userId;
         // redis value
         LoginUserVO loginUserVO = new LoginUserVO();
         loginUserVO.setRole(role);
@@ -104,6 +104,6 @@ public class TokenService {
      * @return jwt redis key的完整名称
      */
     private String getJwtPayloadRedisKey(String userId) {
-        return CacheConstants.JWT_PAYLOAD_REDIS_KEY_PREFIX + userId;
+        return CacheConstants.JWT_PAYLOAD_KEY_PREFIX + userId;
     }
 }
