@@ -4,3 +4,14 @@ server:
 spring:
   application:
     name: horizon-job
+  profiles:
+    active: local
+  cloud:
+    nacos:
+      discovery:
+        namespace: 69c572c7-92b9-4c08-886e-c28fb382045b
+        server-addr: http://localhost:8848
+      config:
+        namespace: 69c572c7-92b9-4c08-886e-c28fb382045b
+        server-addr: http://localhost:8848
+        file-extension: yaml
