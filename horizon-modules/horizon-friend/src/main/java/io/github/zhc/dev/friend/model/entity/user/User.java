@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("tb_user")
-public class User extends BaseEntity<BaseEntity> {
+public class User extends BaseEntity {
     @JsonSerialize(using = ToStringSerializer.class)
     @TableId(value = "USER_ID", type = IdType.ASSIGN_ID)
     private Long userId;

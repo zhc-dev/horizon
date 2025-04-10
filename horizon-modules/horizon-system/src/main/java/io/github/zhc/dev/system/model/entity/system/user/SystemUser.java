@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @TableName("tb_system_user")
-public class SystemUser extends BaseEntity<BaseEntity> implements Serializable {
+public class SystemUser extends BaseEntity implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private Long userId;
     private String userAccount;

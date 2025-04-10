@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-public class Contest extends BaseEntity<BaseEntity> {
+public class Contest extends BaseEntity {
     @TableId(value = "CONTEST_ID", type = IdType.ASSIGN_ID)
     private Long contestId;
 
