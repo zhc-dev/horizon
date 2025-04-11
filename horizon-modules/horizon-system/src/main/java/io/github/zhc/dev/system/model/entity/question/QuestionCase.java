@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("tb_question_case")
-public class QuestionCase extends BaseEntity<BaseEntity> {
+public class QuestionCase extends BaseEntity {
     @TableId(type = IdType.ASSIGN_ID)
     private Long caseId;
     private Long questionId;

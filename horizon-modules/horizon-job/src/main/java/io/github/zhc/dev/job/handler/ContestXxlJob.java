@@ -78,7 +78,6 @@ public class ContestXxlJob {
     }
 
     @XxlJob("contestResultHandler")
-    //
     public void contestResultHandler() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime minusDateTime = now.minusDays(1);
