@@ -58,22 +58,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean sendCode(UserRequest userRequest) {
         if (!checkEmail(userRequest.getEmail())) throw new ServiceException(ResultCode.FAILED_USER_EMAIL);
+
         String code = RandomUtil.randomNumbers(6);
         String emailKey = getEmailCodeKey(userRequest.getEmail());
         String emailTimesKey = getEmailCodeTimesKey(userRequest.getEmail());
-        Long expire = redisService.getExpire(emailKey, TimeUnit.SECONDS);
+
         // 60秒内频繁发送验证码
-        if (expire != null && (emailCodeExpire * 60 - expire) < 60)
-            throw new ServiceException(ResultCode.FAILED_FREQUENT);
+        Long expire = redisService.getExpire(emailKey, TimeUnit.SECONDS);
+        if (expire != null && (emailCodeExpire * 60 - expire) < 60) throw new ServiceException(ResultCode.FAILED_FREQUENT);
         // 限制每天发送次数
         Long sendTimes = redisService.getCacheObject(emailTimesKey, Long.class);
-        if (sendTimes != null && sendTimes >= emailCodeSendLimit)
-            throw new ServiceException(ResultCode.FAILED_TIMES_LIMIT);
+        if (sendTimes != null && sendTimes >= emailCodeSendLimit) throw new ServiceException(ResultCode.FAILED_TIMES_LIMIT);
 
         redisService.setCacheObject(emailKey, code, emailCodeExpire, TimeUnit.MINUTES);
         boolean res = emailService.sendVerificationCode(code, userRequest.getEmail());
+
         if (!res) throw new ServiceException(ResultCode.FAILED_SEND_CODE);
         redisService.increment(emailTimesKey);
+
         if (sendTimes == null) {// 首次发送,设置计数器有效时间为当天
             long seconds = ChronoUnit.SECONDS.between(LocalDateTime.now(), LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0));
             redisService.expire(emailTimesKey, seconds, TimeUnit.SECONDS);
