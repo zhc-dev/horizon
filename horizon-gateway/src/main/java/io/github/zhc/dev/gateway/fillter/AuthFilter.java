@@ -67,6 +67,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
         Claims claims = JwtUtils.getClaims(token, secret);
 
+        if (claims == null) return unauthorizedResponse(exchange, "令牌验证失败");
+
         //通过redis中存储的数据，来控制jwt的过期时间
         String userId = JwtUtils.getUserId(claims);
 
@@ -84,7 +86,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (url.contains(HttpConstants.FRIEND_URL_PREFIX) && !UserRole.ORDINARY.getValue().equals(user.getRole()))
             return unauthorizedResponse(exchange, "令牌验证失败");
 
-
         return chain.filter(exchange);
     }
 
@@ -96,13 +97,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
      * @return 是否匹配
      */
     private boolean matches(String url, List<String> patternList) {
-        if (StrUtil.isEmpty(url) || CollectionUtils.isEmpty(patternList)) {
-            return false;
-        }
+        if (StrUtil.isEmpty(url) || CollectionUtils.isEmpty(patternList)) return false;
+
         for (String pattern : patternList) {
-            if (isMatch(pattern, url)) {
-                return true;
-            }
+            if (isMatch(pattern, url)) return true;
         }
         return false;
     }
@@ -120,8 +118,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
      * @return 是否匹配
      */
     private boolean isMatch(String pattern, String url) {
-        AntPathMatcher matcher = new AntPathMatcher();
-        return matcher.match(pattern, url);
+        return new AntPathMatcher().match(pattern, url);
     }
 
     /**
