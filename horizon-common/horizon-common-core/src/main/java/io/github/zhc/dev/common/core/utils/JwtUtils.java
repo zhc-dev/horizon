@@ -58,9 +58,8 @@ public class JwtUtils {
      * @param claims 数据
      * @return 用户Id
      */
-    public static String getUserId(Claims claims) {
-        return String.valueOf(claims.getOrDefault(JwtConstant.USER_ID, ""));
-
+    public static Long getUserId(Claims claims) {
+        return (Long) claims.getOrDefault(JwtConstant.USER_ID, 0L);
     }
 
     /**

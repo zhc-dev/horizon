@@ -1,8 +1,10 @@
 package io.github.zhc.dev.security.intercepter;
 
 import cn.hutool.core.util.StrUtil;
+import io.github.zhc.dev.common.core.constants.Constants;
 import io.github.zhc.dev.common.core.constants.HttpConstants;
 import io.github.zhc.dev.common.core.utils.JwtUtils;
+import io.github.zhc.dev.common.core.utils.ThreadLocalUtil;
 import io.github.zhc.dev.security.service.TokenService;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
@@ -35,7 +37,14 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         Claims claims = JwtUtils.getClaims(token, secret);
         tokenService.resumeTokenDefaultExpire(claims);
+        Long userId = tokenService.getUserId(claims);
+        ThreadLocalUtil.set(Constants.USER_ID, userId);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        ThreadLocalUtil.remove();
     }
 
     private String getToken(HttpServletRequest request) {

@@ -70,7 +70,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (claims == null) return unauthorizedResponse(exchange, "令牌验证失败");
 
         //通过redis中存储的数据，来控制jwt的过期时间
-        String userId = JwtUtils.getUserId(claims);
+        String userId = String.valueOf(JwtUtils.getUserId(claims));
 
         if (!redisService.hasKey(getTokenKey(userId))) return unauthorizedResponse(exchange, "登录状态已过期");
 

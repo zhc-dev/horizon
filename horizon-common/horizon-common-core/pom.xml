@@ -19,9 +19,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.zhc-dev</groupId>
-            <artifactId>horizon-common-mybatis</artifactId>
-            <version>${horizon-common-mybatis.version}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <dependency>

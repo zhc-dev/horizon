@@ -27,7 +27,7 @@ public class TokenService {
     @Resource
     private RedisService redisService;
 
-    public String createToken(Long userId, String secret, Integer role,String nickName, String headImage) {
+    public String createToken(Long userId, String secret, Integer role, String nickName, String headImage) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtConstant.USER_ID, userId);
         // 生成token
@@ -50,11 +50,11 @@ public class TokenService {
      * @param claims claims 对象
      */
     public void resumeTokenDefaultExpire(Claims claims) {
-        String userId = getUserId(claims);
+        Long userId = getUserId(claims);
 
         if (userId == null) return;
 
-        String tokenKey = getJwtPayloadRedisKey(userId);
+        String tokenKey = getJwtPayloadRedisKey(String.valueOf(userId));
 
         Long expire = redisService.getExpire(tokenKey, TimeUnit.MINUTES);
         if (expire != null && expire < CacheConstants.JWT_TOKEN_REFRESH_THRESHOLD_MINUTES)
@@ -67,7 +67,7 @@ public class TokenService {
      * @param claims claims对象
      * @return 用户id
      */
-    public String getUserId(Claims claims) {
+    public Long getUserId(Claims claims) {
         if (claims == null) return null;
         return JwtUtils.getUserId(claims);
     }
@@ -80,9 +80,9 @@ public class TokenService {
      * @return 用户id
      */
     public LoginUserVO getLoginUser(String token, String secret) {
-        String userId = getUserId(JwtUtils.getClaims(token, secret));
+        Long userId = getUserId(JwtUtils.getClaims(token, secret));
         if (userId == null) return null;
-        return redisService.getCacheObject(getJwtPayloadRedisKey(userId), LoginUserVO.class);
+        return redisService.getCacheObject(getJwtPayloadRedisKey(String.valueOf(userId)), LoginUserVO.class);
     }
 
     /**
@@ -92,9 +92,9 @@ public class TokenService {
      * @param secret secret
      */
     public boolean deleteLoginUser(String token, String secret) {
-        String userId = getUserId(JwtUtils.getClaims(token, secret));
+        Long userId = getUserId(JwtUtils.getClaims(token, secret));
         if (userId == null) return false;
-        return redisService.deleteObject(getJwtPayloadRedisKey(userId));
+        return redisService.deleteObject(getJwtPayloadRedisKey(String.valueOf(userId)));
     }
 
     /**
