@@ -40,5 +40,11 @@
             <artifactId>horizon-common-core</artifactId>
             <version>${horizon-common-core.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-elsticsearch</artifactId>
+            <version>${horizon-common-elsticsearch.version}</version>
+        </dependency>
     </dependencies>
 </project>
