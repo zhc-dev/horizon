@@ -15,6 +15,7 @@ import io.github.zhc.dev.common.core.utils.ThreadLocalUtil;
 import io.github.zhc.dev.friend.manager.UserCacheManager;
 import io.github.zhc.dev.friend.mapper.user.UserMapper;
 import io.github.zhc.dev.friend.model.dto.user.UserRequest;
+import io.github.zhc.dev.friend.model.dto.user.UserUpdateRequest;
 import io.github.zhc.dev.friend.model.entity.user.User;
 import io.github.zhc.dev.friend.model.vo.user.UserVO;
 import io.github.zhc.dev.friend.service.user.UserService;
@@ -146,6 +147,30 @@ public class UserServiceImpl implements UserService {
             userVO.setHeadImage(downloadUrl + userVO.getHeadImage());
         }
         return userVO;
+    }
+
+    @Override
+    public int edit(UserUpdateRequest userUpdateRequest) {
+        Long userId = ThreadLocalUtil.get(Constants.USER_ID, Long.class);
+        if (userId == null) {
+            throw new ServiceException(ResultCode.FAILED_USER_NOT_EXISTS);
+        }
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new ServiceException(ResultCode.FAILED_USER_NOT_EXISTS);
+        }
+        user.setNickName(userUpdateRequest.getNickName());
+        user.setSex(userUpdateRequest.getSex());
+        user.setSchoolName(userUpdateRequest.getSchoolName());
+        user.setMajorName(userUpdateRequest.getMajorName());
+        user.setPhone(userUpdateRequest.getPhone());
+        user.setEmail(userUpdateRequest.getEmail());
+        user.setWechat(userUpdateRequest.getWechat());
+        user.setIntroduce(userUpdateRequest.getIntroduce());
+        //更新用户缓存
+        userCacheManager.refreshUser(user);
+        tokenService.refreshLoginUser(user.getNickName(), user.getHeadImage(), ThreadLocalUtil.get(Constants.USER_ID, Long.class));
+        return userMapper.updateById(user);
     }
 
 

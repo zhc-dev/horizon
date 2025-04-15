@@ -3,6 +3,7 @@ package io.github.zhc.dev.friend.service.user;
 import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.friend.model.dto.user.UserRequest;
+import io.github.zhc.dev.friend.model.dto.user.UserUpdateRequest;
 import io.github.zhc.dev.friend.model.vo.user.UserVO;
 
 /**
@@ -19,4 +20,6 @@ public interface UserService {
     R<LoginUserVO> info(String token);
 
     UserVO detail();
+
+    int edit(UserUpdateRequest userUpdateRequest);
 }

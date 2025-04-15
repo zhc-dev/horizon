@@ -15,8 +15,6 @@ public interface Constants {
 
     String USER_ID = "user_id";
 
-    String USER_KEY = "user_key";
-
     String JUDGE_SERVICE = "oj-judge";
 
     String UNDERLINE_SEPARATOR = "_";

@@ -2,9 +2,9 @@ package io.github.zhc.dev.security.service;
 
 import io.github.zhc.dev.common.core.constants.CacheConstants;
 import io.github.zhc.dev.common.core.constants.JwtConstant;
-import io.github.zhc.dev.redis.service.RedisService;
 import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.utils.JwtUtils;
+import io.github.zhc.dev.redis.service.RedisService;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -105,5 +105,20 @@ public class TokenService {
      */
     private String getJwtPayloadRedisKey(String userId) {
         return CacheConstants.JWT_PAYLOAD_KEY_PREFIX + userId;
+    }
+
+    /**
+     * 刷新登录用户
+     *
+     * @param nickName  nickName
+     * @param headImage headImage
+     * @param userId    userId
+     */
+    public void refreshLoginUser(String nickName, String headImage, Long userId) {
+        String tokenKey = getJwtPayloadRedisKey(String.valueOf(userId));
+        LoginUserVO loginUserVO = redisService.getCacheObject(tokenKey, LoginUserVO.class);
+        loginUserVO.setNickName(nickName);
+        loginUserVO.setHeadImage(headImage);
+        redisService.setCacheObject(tokenKey, loginUserVO);
     }
 }
