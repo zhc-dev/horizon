@@ -30,6 +30,7 @@ build/
 *.patch
 *.tmp
 /logs
+/download
 
 # system ignore
 .DS_Store
