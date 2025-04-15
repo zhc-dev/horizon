@@ -5,6 +5,7 @@ import io.github.zhc.dev.common.core.controller.BaseController;
 import io.github.zhc.dev.common.core.model.entity.LoginUserVO;
 import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.friend.model.dto.user.UserRequest;
+import io.github.zhc.dev.friend.model.vo.user.UserVO;
 import io.github.zhc.dev.friend.service.user.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,10 @@ public class UserController extends BaseController {
     @GetMapping("/info")
     public R<LoginUserVO> info(@RequestHeader(HttpConstants.AUTHENTICATION) String token) {
         return userService.info(token);
+    }
+
+    @GetMapping("/detail")
+    public R<UserVO> detail() {
+        return R.ok(userService.detail());
     }
 }

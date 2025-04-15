@@ -11,9 +11,12 @@ import io.github.zhc.dev.common.core.model.entity.R;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.common.core.model.enums.UserRole;
 import io.github.zhc.dev.common.core.model.enums.UserStatus;
+import io.github.zhc.dev.common.core.utils.ThreadLocalUtil;
+import io.github.zhc.dev.friend.manager.UserCacheManager;
 import io.github.zhc.dev.friend.mapper.user.UserMapper;
 import io.github.zhc.dev.friend.model.dto.user.UserRequest;
 import io.github.zhc.dev.friend.model.entity.user.User;
+import io.github.zhc.dev.friend.model.vo.user.UserVO;
 import io.github.zhc.dev.friend.service.user.UserService;
 import io.github.zhc.dev.message.service.EmailService;
 import io.github.zhc.dev.redis.service.RedisService;
@@ -55,6 +58,12 @@ public class UserServiceImpl implements UserService {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${file.oss.download.url}")
+    private String downloadUrl;
+
+    @Resource
+    private UserCacheManager userCacheManager;
+
     @Override
     public boolean sendCode(UserRequest userRequest) {
         if (!checkEmail(userRequest.getEmail())) throw new ServiceException(ResultCode.FAILED_USER_EMAIL);
@@ -65,10 +74,12 @@ public class UserServiceImpl implements UserService {
 
         // 60秒内频繁发送验证码
         Long expire = redisService.getExpire(emailKey, TimeUnit.SECONDS);
-        if (expire != null && (emailCodeExpire * 60 - expire) < 60) throw new ServiceException(ResultCode.FAILED_FREQUENT);
+        if (expire != null && (emailCodeExpire * 60 - expire) < 60)
+            throw new ServiceException(ResultCode.FAILED_FREQUENT);
         // 限制每天发送次数
         Long sendTimes = redisService.getCacheObject(emailTimesKey, Long.class);
-        if (sendTimes != null && sendTimes >= emailCodeSendLimit) throw new ServiceException(ResultCode.FAILED_TIMES_LIMIT);
+        if (sendTimes != null && sendTimes >= emailCodeSendLimit)
+            throw new ServiceException(ResultCode.FAILED_TIMES_LIMIT);
 
         redisService.setCacheObject(emailKey, code, emailCodeExpire, TimeUnit.MINUTES);
         boolean res = emailService.sendVerificationCode(code, userRequest.getEmail());
@@ -119,6 +130,22 @@ public class UserServiceImpl implements UserService {
         loginUserVO.setNickName(loginUser.getNickName());
         loginUserVO.setHeadImage(loginUser.getHeadImage());
         return R.ok(loginUserVO);
+    }
+
+    @Override
+    public UserVO detail() {
+        Long userId = ThreadLocalUtil.get(Constants.USER_ID, Long.class);
+        if (userId == null) {
+            throw new ServiceException(ResultCode.FAILED_USER_NOT_EXISTS);
+        }
+        UserVO userVO = userCacheManager.getUserById(userId);
+        if (userVO == null) {
+            throw new ServiceException(ResultCode.FAILED_USER_NOT_EXISTS);
+        }
+        if (StrUtil.isNotEmpty(userVO.getHeadImage())) {
+            userVO.setHeadImage(downloadUrl + userVO.getHeadImage());
+        }
+        return userVO;
     }
 
 
