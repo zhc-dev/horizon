@@ -1,4 +1,4 @@
-package io.github.zhc.dev.friend.model.entity.question.es;
+package io.github.zhc.dev.system.model.entity.question.es;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +13,9 @@ import java.util.List;
 
 /**
  * @author zhc-dev
- * @data 2025/4/14 21:19
+ * @data 2025/4/15 21:29
  */
+
 @Document(indexName = "idx_question")
 @Getter
 @Setter

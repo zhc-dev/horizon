@@ -3,8 +3,10 @@ package io.github.zhc.dev.system.service.impl.question;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
+import io.github.zhc.dev.common.core.constants.Constants;
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.github.zhc.dev.security.exception.ServiceException;
+import io.github.zhc.dev.system.elasticsearch.QuestionRepository;
 import io.github.zhc.dev.system.mapper.language.LanguageMapper;
 import io.github.zhc.dev.system.mapper.question.QuestionCaseMapper;
 import io.github.zhc.dev.system.mapper.question.QuestionLanguageMapper;
@@ -13,6 +15,9 @@ import io.github.zhc.dev.system.model.dto.question.*;
 import io.github.zhc.dev.system.model.entity.question.Question;
 import io.github.zhc.dev.system.model.entity.question.QuestionCase;
 import io.github.zhc.dev.system.model.entity.question.QuestionLanguage;
+import io.github.zhc.dev.system.model.entity.question.es.QuestionCaseES;
+import io.github.zhc.dev.system.model.entity.question.es.QuestionES;
+import io.github.zhc.dev.system.model.entity.question.es.QuestionLanguageES;
 import io.github.zhc.dev.system.model.vo.question.QuestionCaseVO;
 import io.github.zhc.dev.system.model.vo.question.QuestionDetailVO;
 import io.github.zhc.dev.system.model.vo.question.QuestionLanguageVO;
@@ -42,6 +47,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Resource
     private LanguageMapper languageMapper;
+
+    @Resource
+    private QuestionRepository questionRepository;
 
     /**
      * 查询题目列表
@@ -80,6 +88,12 @@ public class QuestionServiceImpl implements QuestionService {
             questionLanguage.setQuestionId(question.getQuestionId());
             questionLanguageMapper.insert(questionLanguage);
         }
+
+        QuestionES questionES = new QuestionES();
+        BeanUtil.copyProperties(question, questionES);
+        questionES.setCases(BeanUtil.copyToList(questionCaseMapper.selectList(new LambdaQueryWrapper<QuestionCase>().eq(QuestionCase::getQuestionId, question.getQuestionId())), QuestionCaseES.class));
+        questionES.setLanguages(BeanUtil.copyToList(questionLanguageMapper.selectList(new LambdaQueryWrapper<QuestionLanguage>().eq(QuestionLanguage::getQuestionId, question.getQuestionId())), QuestionLanguageES.class));
+        questionRepository.save(questionES);
 
         return count;
     }
@@ -134,6 +148,11 @@ public class QuestionServiceImpl implements QuestionService {
 
         // 4. 处理语言配置
         handleLanguageConfigs(questionId, questionEditRequest.getLanguages());
+        QuestionES questionES = new QuestionES();
+        BeanUtil.copyProperties(oldQuestion, questionES);
+        questionES.setCases(BeanUtil.copyToList(questionCaseMapper.selectList(new LambdaQueryWrapper<QuestionCase>().eq(QuestionCase::getQuestionId, questionId)), QuestionCaseES.class));
+        questionES.setLanguages(BeanUtil.copyToList(questionLanguageMapper.selectList(new LambdaQueryWrapper<QuestionLanguage>().eq(QuestionLanguage::getQuestionId, questionId)), QuestionLanguageES.class));
+        questionRepository.save(questionES);
         return result;
     }
 
@@ -202,6 +221,7 @@ public class QuestionServiceImpl implements QuestionService {
             questionCaseMapper.insert(questionCase);
         }
     }
+
     /**
      * 处理语言配置的新增、修改和删除
      */
@@ -264,6 +284,10 @@ public class QuestionServiceImpl implements QuestionService {
     public int delete(Long questionId) {
         Question question = questionMapper.selectById(questionId);
         if (question == null) throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+        QuestionES questionES = new QuestionES();
+        BeanUtil.copyProperties(question, questionES);
+        questionRepository.delete(questionES);
+
         return questionMapper.deleteById(questionId);
     }
 

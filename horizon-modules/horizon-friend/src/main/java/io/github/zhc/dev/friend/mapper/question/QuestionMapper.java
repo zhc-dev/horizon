@@ -1,6 +1,4 @@
-/**
- *
- **/
+
 package io.github.zhc.dev.friend.mapper.question;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
