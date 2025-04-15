@@ -51,32 +51,27 @@ public class QuestionServiceImpl implements QuestionService {
         } else if (StrUtil.isEmpty(keyword)) {
             questionESPage = questionRepository.findQuestionByDifficulty(difficulty, pageable);
         } else if (difficulty == null) {
-            questionESPage = questionRepository.findByTitleOrContentOrTagsOrSourceOrHint(keyword, keyword, keyword, keyword, keyword, pageable);
+            questionESPage = questionRepository.findByTitleOrContentOrTagsOrSourceOrHint(keyword, keyword, keyword, pageable);
         } else {
-            questionESPage = questionRepository.findByTitleOrContentOrTagsOrSourceOrHintAndDifficulty(keyword, keyword, keyword, keyword, keyword, difficulty, pageable);
+            questionESPage = questionRepository.findByTitleOrContentOrTagsOrSourceOrHintAndDifficulty(keyword, keyword, keyword, difficulty, pageable);
         }
+        
         long total = questionESPage.getTotalElements();
         if (total <= 0) {
             return TableData.empty();
         }
+        
         List<QuestionES> questionESList = questionESPage.getContent();
         List<QuestionVO> questionVOList = BeanUtil.copyToList(questionESList, QuestionVO.class);
         return TableData.success(questionVOList, total);
     }
 
-    @Override
-    public TableData refreshQuestions() {
-        // 清空现有索引
-        questionRepository.deleteAll();
-        
-        // 重新导入数据
-        List<Question> questionList = questionMapper.selectList(new LambdaQueryWrapper<>());
+    private void refreshQuestions() {
+        List<Question> questionList = questionMapper.selectList(new LambdaQueryWrapper<Question>().eq(Question::getIsDeleted, 0));
         if (CollectionUtil.isEmpty(questionList)) {
-            return TableData.empty();
+            return;
         }
         List<QuestionES> questionESList = BeanUtil.copyToList(questionList, QuestionES.class);
         questionRepository.saveAll(questionESList);
-        
-        return TableData.success("刷新成功", questionList.size());
     }
 }

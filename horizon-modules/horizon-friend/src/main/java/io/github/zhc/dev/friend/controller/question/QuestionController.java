@@ -24,9 +24,4 @@ public class QuestionController extends BaseController {
     public TableData list(QuestionQueryRequest questionQueryRequest) {
         return questionService.list(questionQueryRequest);
     }
-    
-    @PostMapping("/refresh")
-    public TableData refreshQuestions() {
-        return questionService.refreshQuestions();
-    }
 }

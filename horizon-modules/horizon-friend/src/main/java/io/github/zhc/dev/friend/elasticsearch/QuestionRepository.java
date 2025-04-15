@@ -15,10 +15,10 @@ import org.springframework.stereotype.Repository;
 public interface QuestionRepository extends ElasticsearchRepository<QuestionES, Long> {
 
     Page<QuestionES> findQuestionByDifficulty(Integer difficulty, Pageable pageable);
+    
+    @Query("{\"bool\": {\"should\": [{\"match\": {\"title\": \"?0\"}}, {\"match\": {\"tags\": \"?1\"}}, {\"match\": {\"source\": \"?2\"}}, {\"wildcard\": {\"title\": \"*?0*\"}}, {\"wildcard\": {\"tags\": \"*?1*\"}}, {\"wildcard\": {\"source\": \"*?2*\"}}], \"minimum_should_match\": 1, \"must\": [{\"term\": {\"difficulty\": ?3}}]}}")
+    Page<QuestionES> findByTitleOrContentOrTagsOrSourceOrHintAndDifficulty(String keywordTitle, String keywordTags, String keywordSource, Integer difficulty, Pageable pageable);
 
-    @Query("{\"bool\": {\"should\": [{\"match\": {\"title\": \"?0\"}}, {\"match\": {\"content\": \"?1\"}}, {\"match\": {\"tags\": \"?2\"}}, {\"match\": {\"source\": \"?3\"}}, {\"match\": {\"hint\": \"?4\"}}], \"minimum_should_match\": 1, \"must\": [{\"term\": {\"difficulty\": ?5}}]}}")
-    Page<QuestionES> findByTitleOrContentOrTagsOrSourceOrHintAndDifficulty(String keywordTitle, String keywordContent, String keywordTags, String keywordSource, String keywordHint, Integer difficulty, Pageable pageable);
-
-    @Query("{\"bool\": {\"should\": [{\"match\": {\"title\": \"?0\"}}, {\"match\": {\"content\": \"?1\"}}, {\"match\": {\"tags\": \"?2\"}}, {\"match\": {\"source\": \"?3\"}}, {\"match\": {\"hint\": \"?4\"}}], \"minimum_should_match\": 1}}")
-    Page<QuestionES> findByTitleOrContentOrTagsOrSourceOrHint(String keywordTitle, String keywordContent, String keywordTags, String keywordSource, String keywordHint, Pageable pageable);
+    @Query("{\"bool\": {\"should\": [{\"match\": {\"title\": \"?0\"}}, {\"match\": {\"tags\": \"?1\"}}, {\"match\": {\"source\": \"?2\"}}, {\"wildcard\": {\"title\": \"*?0*\"}}, {\"wildcard\": {\"tags\": \"*?1*\"}}, {\"wildcard\": {\"source\": \"*?2*\"}}], \"minimum_should_match\": 1}}")
+    Page<QuestionES> findByTitleOrContentOrTagsOrSourceOrHint(String keywordTitle, String keywordTags, String keywordSource, Pageable pageable);
 }

@@ -9,6 +9,4 @@ import io.github.zhc.dev.friend.model.dto.question.QuestionQueryRequest;
  */
 public interface QuestionService {
     TableData list(QuestionQueryRequest questionQueryRequest);
-    
-    TableData refreshQuestions();
 }
