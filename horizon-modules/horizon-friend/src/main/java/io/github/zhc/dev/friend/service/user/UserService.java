@@ -22,4 +22,6 @@ public interface UserService {
     UserVO detail();
 
     int edit(UserUpdateRequest userUpdateRequest);
+
+    int updateHeadImage(String headImage);
 }

@@ -51,4 +51,9 @@ public class UserController extends BaseController {
     public R<Void> edit(@RequestBody UserUpdateRequest userUpdateRequest) {
         return toR(userService.edit(userUpdateRequest));
     }
+
+    @PutMapping("/head-image/update")
+    public R<Void> updateHeadImage(@RequestBody UserUpdateRequest userUpdateRequest) {
+        return toR(userService.updateHeadImage(userUpdateRequest.getHeadImage()));
+    }
 }
