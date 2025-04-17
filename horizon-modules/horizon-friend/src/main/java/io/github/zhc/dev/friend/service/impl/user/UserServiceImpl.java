@@ -182,7 +182,7 @@ public class UserServiceImpl implements UserService {
         user.setHeadImage(headImage);
         //更新用户缓存
         userCacheManager.refreshUser(user);
-        tokenService.refreshLoginUser(user.getNickName(), user.getHeadImage(), ThreadLocalUtil.get(Constants.USER_ID, Long.class));
+        tokenService.refreshLoginUser(user.getNickName(), downloadUrl + user.getHeadImage(), ThreadLocalUtil.get(Constants.USER_ID, Long.class));
         return userMapper.updateById(user);
     }
 

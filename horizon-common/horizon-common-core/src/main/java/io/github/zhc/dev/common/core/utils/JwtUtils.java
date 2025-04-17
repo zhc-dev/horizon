@@ -7,10 +7,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
-import java.security.Key;
-import java.util.Map;
-import java.util.HashMap;
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Jwt 工具类
@@ -59,6 +59,10 @@ public class JwtUtils {
      * @return 用户Id
      */
     public static Long getUserId(Claims claims) {
+        Object userIdObject = claims.getOrDefault(JwtConstant.USER_ID, 0L);
+        if (userIdObject instanceof Integer) {
+            return ((Integer) userIdObject).longValue();
+        }
         return (Long) claims.getOrDefault(JwtConstant.USER_ID, 0L);
     }
 
