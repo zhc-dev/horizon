@@ -7,6 +7,12 @@ import io.github.zhc.dev.common.core.model.entity.TableData;
 
 import java.util.List;
 
+/**
+ * 控制器基类
+ *
+ * @author zhc
+ * @date 2025/4/20 00:21
+ */
 public class BaseController {
     /**
      * 封装结果

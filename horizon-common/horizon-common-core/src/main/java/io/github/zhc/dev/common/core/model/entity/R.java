@@ -2,7 +2,9 @@ package io.github.zhc.dev.common.core.model.entity;
 
 import io.github.zhc.dev.common.core.model.enums.ResultCode;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -11,6 +13,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class R<T> {
     @Schema(description = "响应状态码")
     private int code;
@@ -37,30 +41,44 @@ public class R<T> {
         return assembleResult(code, msg, null);
     }
 
-    /**
-     * 指定错误码
-     *
-     * @param resultCode 指定错误码
-     * @param <T>
-     * @return
-     */
     public static <T> R<T> fail(ResultCode resultCode) {
         return assembleResult(null, resultCode);
     }
 
     private static <T> R<T> assembleResult(T data, ResultCode resultCode) {
-        R<T> r = new R<>();
-        r.setCode(resultCode.getCode());
-        r.setData(data);
-        r.setMsg(resultCode.getMsg());
-        return r;
+        return new Builder<T>().code(resultCode.getCode()).msg(resultCode.getMsg()).data(data).build();
     }
 
     private static <T> R<T> assembleResult(int code, String msg, T data) {
-        R<T> r = new R<>();
-        r.setCode(code);
-        r.setData(data);
-        r.setMsg(msg);
-        return r;
+        return new Builder<T>().code(code).msg(msg).data(data).build();
+    }
+
+    // builder
+    public static class Builder<T> {
+        private int code;
+        private String msg;
+        private T data;
+
+        private Builder() {
+        }
+
+        public R<T> build() {
+            return new R<>(code, msg, data);
+        }
+
+        public Builder<T> code(int code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder<T> msg(String msg) {
+            this.msg = msg;
+            return this;
+        }
+
+        public Builder<T> data(T data) {
+            this.data = data;
+            return this;
+        }
     }
 }
