@@ -4,11 +4,15 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.github.pagehelper.PageHelper;
+import io.github.zhc.dev.common.core.constants.Constants;
 import io.github.zhc.dev.common.core.model.entity.TableData;
 import io.github.zhc.dev.friend.elasticsearch.QuestionRepository;
+import io.github.zhc.dev.friend.manager.QuestionCacheManager;
 import io.github.zhc.dev.friend.mapper.question.QuestionCaseMapper;
 import io.github.zhc.dev.friend.mapper.question.QuestionLanguageMapper;
 import io.github.zhc.dev.friend.mapper.question.QuestionMapper;
+import io.github.zhc.dev.friend.mapper.user.UserSubmitMapper;
 import io.github.zhc.dev.friend.model.dto.question.QuestionQueryRequest;
 import io.github.zhc.dev.friend.model.entity.question.Question;
 import io.github.zhc.dev.friend.model.entity.question.QuestionCase;
@@ -49,6 +53,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Resource
     private QuestionLanguageMapper questionLanguageMapper;
+
+    @Resource
+    private QuestionCacheManager questionCacheManager;
+
+    @Resource
+    private UserSubmitMapper userSubmitMapper;
 
     @Override
     public TableData list(QuestionQueryRequest questionQueryRequest) {
@@ -107,6 +117,38 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDetailVO;
     }
 
+    @Override
+    public String preQuestion(Long questionId) {
+        Long listSize = questionCacheManager.getListSize();
+        if (listSize == null || listSize <= 0) {
+            questionCacheManager.refreshCache();
+        }
+        return questionCacheManager.preQuestion(questionId).toString();
+    }
+
+    @Override
+    public String nextQuestion(Long questionId) {
+        Long listSize = questionCacheManager.getListSize();
+        if (listSize == null || listSize <= 0) {
+            questionCacheManager.refreshCache();
+        }
+        return questionCacheManager.nextQuestion(questionId).toString();
+    }
+
+    @Override
+    public List<QuestionVO> hotList() {
+        Long total = questionCacheManager.getHostListSize();
+        List<Long> hotQuestionIdList;
+        if (total == null || total <= 0) {
+            PageHelper.startPage(Constants.HOST_QUESTION_LIST_START, Constants.HOST_QUESTION_LIST_END);
+            hotQuestionIdList = userSubmitMapper.selectHostQuestionList();
+            questionCacheManager.refreshHotQuestionList(hotQuestionIdList);
+        } else {
+            hotQuestionIdList = questionCacheManager.getHostList();
+        }
+        return assembleQuestionVOList(hotQuestionIdList);
+    }
+
     private void refreshQuestions() {
         List<Question> questionList = questionMapper.selectList(new LambdaQueryWrapper<Question>().eq(Question::getIsDeleted, 0));
         if (CollectionUtil.isEmpty(questionList)) {
@@ -121,5 +163,19 @@ public class QuestionServiceImpl implements QuestionService {
             questionESList.add(questionES);
         }
         questionRepository.saveAll(questionESList);
+    }
+
+    private List<QuestionVO> assembleQuestionVOList(List<Long> hotQuestionIdList) {
+        if (CollectionUtil.isEmpty(hotQuestionIdList)) {
+            return new ArrayList<>();
+        }
+        List<QuestionVO> resultList = new ArrayList<>();
+        for (Long questionId : hotQuestionIdList) {
+            QuestionVO questionVO = new QuestionVO();
+            QuestionDetailVO detail = detail(questionId);
+            questionVO.setTitle(detail.getTitle());
+            resultList.add(questionVO);
+        }
+        return resultList;
     }
 }
