@@ -1,7 +1,7 @@
 package io.github.zhc.dev.common.core.constants;
 
 /**
- * http 常量
+ * HTTP 常量类，用于定义系统中常用的 HTTP 相关常量。
  *
  * @author zhc.dev
  * @date 2025/3/27 23:52
@@ -25,5 +25,5 @@ public class HttpConstants {
     /**
      * 令牌前缀
      */
-    public static final String PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "Bearer ";
 }

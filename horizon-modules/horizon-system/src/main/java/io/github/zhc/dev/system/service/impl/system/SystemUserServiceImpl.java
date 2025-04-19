@@ -80,8 +80,8 @@ public class SystemUserServiceImpl implements SystemUserService {
      */
     @Override
     public boolean logout(String token) {
-        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
-            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.TOKEN_PREFIX)) {
+            token = token.replaceFirst(HttpConstants.TOKEN_PREFIX, StrUtil.EMPTY);
         }
         return tokenService.deleteLoginUser(token, secret);
     }
@@ -94,8 +94,8 @@ public class SystemUserServiceImpl implements SystemUserService {
      */
     @Override
     public R<CurrentLoginUserVO> currentLoginUser(String token) {
-        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
-            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.TOKEN_PREFIX)) {
+            token = token.replaceFirst(HttpConstants.TOKEN_PREFIX, StrUtil.EMPTY);
         }
         // 查询redis，获取当前登录用户
         LoginUserVO loginUserVO = tokenService.getLoginUser(token, secret);
