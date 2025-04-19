@@ -7,9 +7,14 @@ import io.github.zhc.dev.common.core.constants.Constants;
 import io.github.zhc.dev.common.core.model.entity.TableData;
 import io.github.zhc.dev.common.core.utils.ThreadLocalUtil;
 import io.github.zhc.dev.friend.manager.ContestCacheManager;
+import io.github.zhc.dev.friend.manager.UserCacheManager;
 import io.github.zhc.dev.friend.mapper.contest.ContestMapper;
+import io.github.zhc.dev.friend.mapper.user.UserContestMapper;
 import io.github.zhc.dev.friend.model.dto.contest.ContestQueryRequest;
+import io.github.zhc.dev.friend.model.dto.contest.ContestRankRequest;
+import io.github.zhc.dev.friend.model.vo.contest.ContestRankVO;
 import io.github.zhc.dev.friend.model.vo.contest.ContestVO;
+import io.github.zhc.dev.friend.model.vo.user.UserVO;
 import io.github.zhc.dev.friend.service.contest.ContestService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -27,6 +32,12 @@ public class ContestServiceImpl implements ContestService {
 
     @Resource
     private ContestCacheManager contestCacheManager;
+
+    @Resource
+    private UserCacheManager userCacheManager;
+
+    @Resource
+    private UserContestMapper userContestMapper;
 
     @Override
     public List<ContestVO> list(ContestQueryRequest contestQueryRequest) {
@@ -54,6 +65,53 @@ public class ContestServiceImpl implements ContestService {
         return TableData.success(contestVOList, total);
     }
 
+    @Override
+    public TableData rankList(ContestRankRequest contestRankRequest) {
+        Long total = contestCacheManager.getRankListSize(contestRankRequest.getContestId());
+        List<ContestRankVO> contestRankVOS;
+        if (total == null || total <= 0) {
+            PageHelper.startPage(contestRankRequest.getPageNum(), contestRankRequest.getPageSize());
+            contestRankVOS = userContestMapper.selectContestRankList(contestRankRequest.getContestId());
+            contestCacheManager.refreshContestRankCache(contestRankRequest.getContestId());
+            total = new PageInfo<>(contestRankVOS).getTotal();
+        } else {
+            contestRankVOS = contestCacheManager.getContestRankList(contestRankRequest);
+        }
+        if (CollectionUtil.isEmpty(contestRankVOS)) {
+            return TableData.empty();
+        }
+        assembleContestRankVOList(contestRankVOS);
+        return TableData.success(contestRankVOS, total);
+    }
+
+    @Override
+    public String getFirstQuestion(Long contestId) {
+        checkAndRefresh(contestId);
+        return contestCacheManager.getFirstQuestion(contestId).toString();
+    }
+
+    @Override
+    public String preQuestion(Long contestId, Long questionId) {
+        checkAndRefresh(contestId);
+        return contestCacheManager.preQuestion(contestId, questionId).toString();
+    }
+
+    @Override
+    public String nextQuestion(Long contestId, Long questionId) {
+        checkAndRefresh(contestId);
+        return contestCacheManager.nextQuestion(contestId, questionId).toString();
+    }
+
+    private void assembleContestRankVOList(List<ContestRankVO> contestRankVOList) {
+        if (CollectionUtil.isEmpty(contestRankVOList)) return;
+
+        for (ContestRankVO contestRankVO : contestRankVOList) {
+            Long userId = contestRankVO.getUserId();
+            UserVO user = userCacheManager.getUserById(userId);
+            contestRankVO.setNickName(user.getNickName());
+        }
+    }
+
     private void assembleContestVOList(List<ContestVO> contestVOList) {
         Long userId = ThreadLocalUtil.get(Constants.USER_ID, Long.class);
         List<Long> userContestList = contestCacheManager.getAllUserContestList(userId);
@@ -64,6 +122,13 @@ public class ContestServiceImpl implements ContestService {
             if (userContestList.contains(contestVO.getContestId())) {
                 contestVO.setEnter(true);
             }
+        }
+    }
+
+    private void checkAndRefresh(Long contestId) {
+        Long listSize = contestCacheManager.getContestQuestionListSize(contestId);
+        if (listSize == null || listSize <= 0) {
+            contestCacheManager.refreshContestQuestionCache(contestId);
         }
     }
 }

@@ -28,7 +28,7 @@ public class UserSubmit {
 
     private Long questionId;
 
-    private Long examId;
+    private Long contestId;
 
     private Integer programType;
 

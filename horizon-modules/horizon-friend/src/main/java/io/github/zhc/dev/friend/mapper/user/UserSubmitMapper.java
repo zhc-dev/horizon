@@ -11,7 +11,7 @@ import java.util.List;
  * @data 2025/4/19 17:39
  */
 public interface UserSubmitMapper extends BaseMapper<UserSubmit> {
-    UserSubmit selectCurrentUserSubmit(Long userId, Long examId, Long questionId, String currentTime);
+    UserSubmit selectCurrentUserSubmit(Long userId, Long contestId, Long questionId, String currentTime);
 
     List<Long> selectHostQuestionList();
 }

@@ -31,19 +31,17 @@ public class UserCacheManager {
             redisService.expire(userKey, CacheConstants.USER_EXPIRATION_TIME, TimeUnit.MINUTES);
             return userVO;
         }
-        User user = userMapper.selectOne(new LambdaQueryWrapper<User>()
-                .select(User::getUserId,
-                        User::getNickName,
-                        User::getHeadImage,
-                        User::getSex,
-                        User::getEmail,
-                        User::getPhone,
-                        User::getWechat,
-                        User::getIntroduce,
-                        User::getSchoolName,
-                        User::getMajorName,
-                        User::getStatus)
-                .eq(User::getUserId, userId));
+        User user = userMapper.selectOne(new LambdaQueryWrapper<User>().select(User::getUserId,
+                User::getNickName,
+                User::getHeadImage,
+                User::getSex,
+                User::getEmail,
+                User::getPhone,
+                User::getWechat,
+                User::getIntroduce,
+                User::getSchoolName,
+                User::getMajorName,
+                User::getStatus).eq(User::getUserId, userId));
         if (user == null) {
             return null;
         }
