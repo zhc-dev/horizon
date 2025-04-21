@@ -31,6 +31,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <commons-lang3.vsersion>3.12.0</commons-lang3.vsersion>
         <horizon-swagger.version>1.0-SNAPSHOT</horizon-swagger.version>
+        <horizon-common-file.version>1.0-SNAPSHOT</horizon-common-file.version>
         <horizon-common-core.version>1.0-SNAPSHOT</horizon-common-core.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <horizon-common-email.version>1.0-SNAPSHOT</horizon-common-email.version>

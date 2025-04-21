@@ -43,6 +43,12 @@
 
         <dependency>
             <groupId>io.github.zhc-dev</groupId>
+            <artifactId>horizon-common-file</artifactId>
+            <version>${horizon-common-file.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.zhc-dev</groupId>
             <artifactId>horizon-common-elsticsearch</artifactId>
             <version>${horizon-common-elsticsearch.version}</version>
         </dependency>
